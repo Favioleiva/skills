@@ -94,14 +94,39 @@ When producing Japanese audio narration for the presentation:
 
 ---
 
-## 6. Script Utilities Reference
+---
+
+## 6. Presentation Video Generator (1080p MP4)
+
+Automatically generates a synchronized 1080p MP4 presentation video by exporting high-resolution slide frames and pairing each slide with its recorded audio track:
+
+```bash
+# Japanese Presentation (with VOICEVOX or recorded audio)
+python scripts/build_presentation_video.py --lang ja --audio-dir Audio/Japanese
+
+# English Presentation (with custom voice recordings)
+python scripts/build_presentation_video.py --lang en --audio-dir Audio/English
+
+# Spanish Presentation (with custom voice recordings)
+python scripts/build_presentation_video.py --lang es --audio-dir Audio/Spanish
+```
+
+* **Custom Audio Parameters**:
+  * `--padding-pre 0.3`: Adds 0.3s of clean breathing space before speech.
+  * `--padding-post 0.5`: Adds 0.5s of smooth transition time after speech.
+  * Generates `_chapters.txt` timestamp markers for YouTube and video player navigation.
+
+---
+
+## 7. Script Utilities Reference
 
 * `scripts/check_image_status.py`: Inspects `output/images/` and reports completed and pending design numbers.
 * `scripts/build_pptx.py`: Generates the 3 `.pptx` decks using full-bleed backgrounds, split textframes, dynamic font sizing, and background-aware contrast colors.
 * `scripts/validate_pptx.py`: Verifies slide count (53), 16:9 dimensions, single-sentence content slides, vocabulary item counts, and phonetic kana compliance.
+* `scripts/build_presentation_video.py`: Assembles 1080p MP4 presentation videos with auto slide frame export and exact audio synchronization.
 
 ---
 
-## 6. License & Credits
+## 8. License & Credits
 * **Author**: Favio Leiva (FL)
 * **Framework**: Crafted with GPT and FL; drafts and illustrations with Gemini.

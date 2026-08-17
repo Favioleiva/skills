@@ -69,7 +69,41 @@ def parse_kana_slides(kana_file_path):
         slide_texts.append(spoken)
     return slide_texts
 
-def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="128k"):
+def pad_wav_pcm(raw_wav_bytes, pre_sec=0.500, post_sec=0.500):
+    """
+    Prepends and appends exact PCM digital silence to uncompressed WAV bytes.
+    Does NOT slice, trim, normalize, or fade existing audio samples.
+    """
+    import io
+    import wave
+    with wave.open(io.BytesIO(raw_wav_bytes), 'rb') as wf_in:
+        nchannels = wf_in.getnchannels()
+        sampwidth = wf_in.getsampwidth()
+        framerate = wf_in.getframerate()
+        nframes = wf_in.getnframes()
+        comptype = wf_in.getcomptype()
+        compname = wf_in.getcompname()
+        raw_pcm = wf_in.readframes(nframes)
+
+    pre_frames = int(framerate * pre_sec)
+    post_frames = int(framerate * post_sec)
+
+    silence_pre = b'\x00' * (pre_frames * nchannels * sampwidth)
+    silence_post = b'\x00' * (post_frames * nchannels * sampwidth)
+
+    padded_pcm = silence_pre + raw_pcm + silence_post
+
+    out_io = io.BytesIO()
+    with wave.open(out_io, 'wb') as wf_out:
+        wf_out.setnchannels(nchannels)
+        wf_out.setsampwidth(sampwidth)
+        wf_out.setframerate(framerate)
+        wf_out.setcomptype(comptype, compname)
+        wf_out.writeframes(padded_pcm)
+
+    return out_io.getvalue()
+
+def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="128k", save_raw_wav=None, save_padded_wav=None):
     # 1. Query
     query_resp = requests.post(f"{host}/audio_query", params={"text": text, "speaker": speaker_id}, timeout=60)
     query = query_resp.json()
@@ -77,10 +111,8 @@ def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="
     query["pitchScale"] = 0.0
     query["intonationScale"] = 1.0
     query["volumeScale"] = 1.0
-    query["prePhonemeLength"] = 0.1
-    query["postPhonemeLength"] = 0.1
 
-    # 2. Synthesize WAV
+    # 2. Synthesize uncompressed WAV bytes
     wav_resp = requests.post(
         f"{host}/synthesis",
         params={"speaker": speaker_id},
@@ -88,9 +120,18 @@ def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="
         headers={"Content-Type": "application/json"},
         timeout=120
     )
-    wav_bytes = wav_resp.content
+    raw_wav_bytes = wav_resp.content
 
-    # 3. Convert to MP3
+    if save_raw_wav:
+        Path(save_raw_wav).write_bytes(raw_wav_bytes)
+
+    # 3. Prepend & Append 500ms digital silence to raw WAV
+    padded_wav_bytes = pad_wav_pcm(raw_wav_bytes, pre_sec=0.500, post_sec=0.500)
+
+    if save_padded_wav:
+        Path(save_padded_wav).write_bytes(padded_wav_bytes)
+
+    # 4. Convert padded WAV to MP3 without any filter, trimming, or fade
     cmd = [
         ffmpeg_exe, "-y",
         "-hide_banner", "-loglevel", "error",
@@ -99,7 +140,7 @@ def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="
         "-b:a", bitrate,
         str(out_mp3_path)
     ]
-    res = subprocess.run(cmd, input=wav_bytes, capture_output=True)
+    res = subprocess.run(cmd, input=padded_wav_bytes, capture_output=True)
     if res.returncode != 0:
         raise RuntimeError(f"FFmpeg error: {res.stderr.decode('utf-8', errors='replace')}")
 

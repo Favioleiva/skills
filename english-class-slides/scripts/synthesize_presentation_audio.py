@@ -121,16 +121,11 @@ def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="
         accent_phrases = query.get("accent_phrases", [])
         if accent_phrases and accent_phrases[0].get("moras"):
             first_mora = accent_phrases[0]["moras"][0]
-            if first_mora.get("consonant_length") is not None:
-                first_mora["consonant_length"] = max(
-                    first_mora["consonant_length"],
-                    0.10
-                )
-            if first_mora.get("vowel_length") is not None:
-                first_mora["vowel_length"] = max(
-                    first_mora["vowel_length"],
-                    0.14
-                )
+            if first_mora.get("consonant") is not None or first_mora.get("consonant_length") is not None:
+                curr_c = first_mora.get("consonant_length") or 0.0
+                first_mora["consonant_length"] = max(curr_c, 0.12)
+            curr_v = first_mora.get("vowel_length") or 0.0
+            first_mora["vowel_length"] = max(curr_v, 0.15)
     except Exception:
         pass
 

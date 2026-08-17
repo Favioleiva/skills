@@ -103,7 +103,7 @@ def pad_wav_pcm(raw_wav_bytes, pre_sec=0.500, post_sec=0.500):
 
     return out_io.getvalue()
 
-def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="128k", save_raw_wav=None, save_padded_wav=None):
+def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="128k", reinforce_first_mora=False, save_raw_wav=None, save_padded_wav=None):
     # 1. Query
     query_resp = requests.post(f"{host}/audio_query", params={"text": text, "speaker": speaker_id}, timeout=60)
     query = query_resp.json()
@@ -111,6 +111,27 @@ def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="
     query["pitchScale"] = 0.0
     query["intonationScale"] = 1.0
     query["volumeScale"] = 1.0
+
+    if reinforce_first_mora:
+        query["prePhonemeLength"] = 0.5
+        query["postPhonemeLength"] = 0.5
+        try:
+            first_mora = query["accent_phrases"][0]["moras"][0]
+            if first_mora.get("text") == "ニ":
+                first_mora["consonant_length"] = max(
+                    first_mora.get("consonant_length") or 0,
+                    0.10
+                )
+                first_mora["vowel_length"] = max(
+                    first_mora.get("vowel_length") or 0,
+                    0.14
+                )
+                print(f"  [VOICEVOX] Reinforced initial ニ mora for {Path(out_mp3_path).name}")
+        except (KeyError, IndexError, TypeError):
+            pass
+    else:
+        query["prePhonemeLength"] = 0.1
+        query["postPhonemeLength"] = 0.1
 
     # 2. Synthesize uncompressed WAV bytes
     wav_resp = requests.post(
@@ -126,7 +147,7 @@ def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="
         Path(save_raw_wav).write_bytes(raw_wav_bytes)
 
     # 3. Prepend & Append 500ms digital silence to raw WAV
-    padded_wav_bytes = pad_wav_pcm(raw_wav_bytes, pre_sec=0.500, post_sec=0.500)
+    padded_wav_bytes = pad_wav_pcm(raw_wav_bytes, pre_sec=0.500 if reinforce_first_mora else 0.100, post_sec=0.500 if reinforce_first_mora else 0.100)
 
     if save_padded_wav:
         Path(save_padded_wav).write_bytes(padded_wav_bytes)
@@ -150,15 +171,17 @@ def main():
     parser.add_argument("--output-dir", default="Audio/Japanese", help="Output directory for MP3 files")
     parser.add_argument("--host", default="http://127.0.0.1:50021", help="VOICEVOX host URL")
     parser.add_argument("--speaker-id", type=int, default=13, help="Speaker ID (default: 13 Aoyama Ryusei)")
+    parser.add_argument("--force-regenerate", nargs="*", type=int, default=[1], help="Slide IDs to force regenerate (default: 1)")
     args = parser.parse_args()
 
     print("=" * 65)
     print("PRESENTATION AUDIO SYNTHESIZER (VOICEVOX / RTX 3060)")
     print("=" * 65)
-    print(f"Input Kana  : {args.kana_file}")
-    print(f"Output Dir  : {args.output_dir}")
-    print(f"Host URL    : {args.host}")
-    print(f"Speaker ID  : {args.speaker_id}")
+    print(f"Input Kana       : {args.kana_file}")
+    print(f"Output Dir       : {args.output_dir}")
+    print(f"Host URL         : {args.host}")
+    print(f"Speaker ID       : {args.speaker_id}")
+    print(f"Force Regenerate : {args.force_regenerate}")
     print("=" * 65)
 
     # Check connection
@@ -176,16 +199,33 @@ def main():
     slide_texts = parse_kana_slides(args.kana_file)
     print(f"[+] Loaded {len(slide_texts)} continuous-kana slide entries.\n")
 
+    force_set = set(args.force_regenerate)
     start_time = time.time()
+    generated_count = 0
+    skipped_count = 0
+
     for idx, text in enumerate(slide_texts, start=1):
         out_mp3 = Path(args.output_dir) / f"slide_{idx:02d}.mp3"
+        if out_mp3.exists() and out_mp3.stat().st_size > 0 and idx not in force_set:
+            skipped_count += 1
+            continue
+
         print(f"  [{idx:02d}/{len(slide_texts)}] Synthesizing {out_mp3.name}...")
-        synthesize_slide(args.host, args.speaker_id, text, out_mp3, ffmpeg_exe)
+        synthesize_slide(
+            host=args.host,
+            speaker_id=args.speaker_id,
+            text=text,
+            out_mp3_path=out_mp3,
+            ffmpeg_exe=ffmpeg_exe,
+            reinforce_first_mora=(idx == 1)
+        )
+        generated_count += 1
 
     elapsed = time.time() - start_time
     print("\n" + "=" * 65)
-    print(f"★ SYNTHESIS COMPLETE! 53 MP3 files generated in: {args.output_dir}")
-    print(f"★ Elapsed Time: {elapsed:.1f} seconds (avg {elapsed/53:.2f}s per slide)")
+    print(f"★ SYNTHESIS COMPLETE! Generated: {generated_count}, Skipped: {skipped_count}")
+    print(f"★ Output Folder: {args.output_dir}")
+    print(f"★ Elapsed Time: {elapsed:.1f} seconds")
     print("=" * 65)
 
 if __name__ == "__main__":

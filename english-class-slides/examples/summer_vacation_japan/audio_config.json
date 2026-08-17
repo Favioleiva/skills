@@ -1,0 +1,23 @@
+{
+  "backend": "voicevox",
+  "speaker_id": 13,
+  "speaker_name": "青山龍星 (ノーマル)",
+  "speed_scale": 0.95,
+  "pitch_scale": 0.0,
+  "intonation_scale": 1.0,
+  "volume_scale": 1.0,
+  "pre_phoneme_length": 0.10,
+  "post_phoneme_length": 0.10,
+  "mp3_bitrate": "128k",
+  "wav_padding": {
+    "pre_silence_sec": 0.50,
+    "post_silence_sec": 0.50
+  },
+  "continuous_master": {
+    "inter_slide_silence_sec": 0.50,
+    "startup_cue": {
+      "text": "ピッ",
+      "pre_gap_sec": 0.15
+    }
+  }
+}

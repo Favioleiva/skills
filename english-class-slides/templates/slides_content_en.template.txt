@@ -1,50 +1,61 @@
+Presentation Title: [Insert Title]
+Language: English
+Cover Slides: 1
+Content Slides: [N]
+Vocabulary Slides: 2
+Total Slides: [N+2]
+Cover Designs: 1
+Content Designs: [D]
+Vocabulary Designs: 1
+Total Image Designs: [D+1]
+
 SLIDE 1
 Design: 00
-Title: [Creative Presentation Title]
-Subtitle: [Engaging Subtitle]
-Author: Favio Leiva (FL)
+Title: [Creative Engaging Title]
+Subtitle: [Evocative Subtitle]
+Author: [Author Name (Initials)]
 AI-Assisted Production: AI-assisted content, design and illustrations.
 Credits:
 Skill framework crafted by GPT and FL.
 Content drafts and illustrations created with Gemini.
-Final selection, auditing and revision by FL.
+Final selection, auditing and revision by [Initials].
 
 SLIDE 2
 Design: 01
-Text: [Short, natural English sentence for A1-A2 learners to read aloud.]
+Text: [First short, natural, single-sentence claim matched to Level A1-A2.]
 
 SLIDE 3
 Design: 01
-Text: [Second single sentence continuing the theme.]
+Text: [Second single sentence continuing the narrative arc.]
 
-[... continue through SLIDE 51 ...]
+...
 
-SLIDE 52
-Design: 13
+SLIDE [N+1]
+Design: [D+1]
 Title: Vocabulary 1
 Words:
-1. [concept_1] — [short clear learner definition]
-2. [concept_2] — [short clear learner definition]
-3. [concept_3] — [short clear learner definition]
-4. [concept_4] — [short clear learner definition]
-5. [concept_5] — [short clear learner definition]
-6. [concept_6] — [short clear learner definition]
-7. [concept_7] — [short clear learner definition]
-8. [concept_8] — [short clear learner definition]
-9. [concept_9] — [short clear learner definition]
-10. [concept_10] — [short clear learner definition]
+1. headword1 — brief natural definition
+2. headword2 — brief natural definition
+3. headword3 — brief natural definition
+4. headword4 — brief natural definition
+5. headword5 — brief natural definition
+6. headword6 — brief natural definition
+7. headword7 — brief natural definition
+8. headword8 — brief natural definition
+9. headword9 — brief natural definition
+10. headword10 — brief natural definition
 
-SLIDE 53
-Design: 13
+SLIDE [N+2]
+Design: [D+1]
 Title: Vocabulary 2
 Words:
-1. [concept_11] — [short clear learner definition]
-2. [concept_12] — [short clear learner definition]
-3. [concept_13] — [short clear learner definition]
-4. [concept_14] — [short clear learner definition]
-5. [concept_15] — [short clear learner definition]
-6. [concept_16] — [short clear learner definition]
-7. [concept_17] — [short clear learner definition]
-8. [concept_18] — [short clear learner definition]
-9. [concept_19] — [short clear learner definition]
-10. [concept_20] — [short clear learner definition]
+1. headword11 — brief natural definition
+2. headword12 — brief natural definition
+3. headword13 — brief natural definition
+4. headword14 — brief natural definition
+5. headword15 — brief natural definition
+6. headword16 — brief natural definition
+7. headword17 — brief natural definition
+8. headword18 — brief natural definition
+9. headword19 — brief natural definition
+10. headword20 — brief natural definition

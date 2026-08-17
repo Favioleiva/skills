@@ -1,6 +1,7 @@
 {
   "deck_name": "Summer Vacation in Japan",
-  "topic": "summer_vacation",
+  "topic": "summer_vacation_japan",
+  "level": "A1-A2",
   "slide_count": 53,
   "content_slides_count": 50,
   "vocab_slides_count": 2,
@@ -10,10 +11,75 @@
     "content_ja": "slides_content_ja.txt",
     "reading_ja_kana": "slides_reading_ja_kana.txt",
     "image_prompts": "image_prompts.txt",
-    "images_dir": "../../output/images",
-    "output_pptx_en": "slides_summer_vacation_en.pptx",
-    "output_pptx_es": "slides_summer_vacation_es.pptx",
-    "output_pptx_ja": "slides_summer_vacation_ja.pptx"
+    "images_dir": "output/images",
+    "output_pptx_en": "output/slides_summer_vacation_en.pptx",
+    "output_pptx_es": "output/slides_summer_vacation_es.pptx",
+    "output_pptx_ja": "output/slides_summer_vacation_ja.pptx",
+    "output_frames_dir": "output/frames_summer_vacation_presentation_ja",
+    "audio_dir_ja": "Audio/Japanese",
+    "audio_dir_en": "Audio/English",
+    "audio_dir_es": "Audio/Spanish",
+    "master_audio_wav": "output/summer_vacation_ja_master_continuous.wav",
+    "output_video_mp4": "output/summer_vacation_presentation_ja.mp4"
+  },
+  "slide_numbering": {
+    "enabled": true,
+    "exclude_cover": true,
+    "exclude_vocabulary": true,
+    "start_number": 1,
+    "format": "{:02d}",
+    "font_name_en": "Nunito Sans",
+    "font_name_es": "Nunito Sans",
+    "font_name_ja": "Noto Sans JP",
+    "font_size_pt": 14,
+    "bold": true,
+    "position": {
+      "left_in": 0.90,
+      "top_in": 6.65,
+      "width_in": 2.00,
+      "height_in": 0.40
+    }
+  },
+  "audio": {
+    "enabled": true,
+    "backend": "voicevox",
+    "host": "http://127.0.0.1:50021",
+    "speaker_id": 13,
+    "speed_scale": 0.95,
+    "pitch_scale": 0.0,
+    "intonation_scale": 1.0,
+    "volume_scale": 1.0,
+    "pre_phoneme_length": 0.10,
+    "post_phoneme_length": 0.10,
+    "wav_pre_silence_sec": 0.50,
+    "wav_post_silence_sec": 0.50,
+    "inter_slide_silence_sec": 0.50,
+    "test_mode": false,
+    "test_slide_indices": [1, 2, 10, 30]
+  },
+  "video": {
+    "enabled": true,
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "prefer_nvenc": true,
+    "nvenc_preset": "p4",
+    "nvenc_cq": 20,
+    "x264_preset": "medium",
+    "x264_crf": 18,
+    "audio_codec": "aac",
+    "audio_bitrate": "192k",
+    "startup_audio": {
+      "mode": "silence",
+      "duration_sec": 0.50,
+      "cue_file": null
+    },
+    "diagnostic_preview": {
+      "enabled": true,
+      "duration_sec": 15.0,
+      "sample_slides": [1, 2, 3],
+      "extract_frame_sec": [1.0, 6.0, 11.0]
+    }
   },
   "background_mapping": {
     "1": "design_00_cover.png",
@@ -37,21 +103,30 @@
       "top_in": 2.20,
       "width_in": 4.70,
       "height_in": 3.20,
-      "text_color": "1A2433"
+      "text_color": "1A2433",
+      "number_left_in": 0.30,
+      "number_top_in": 6.65,
+      "number_color": "1A2433"
     },
     "27-31": {
       "left_in": 0.50,
       "top_in": 1.00,
       "width_in": 4.70,
-      "height_in": 1.802,
-      "text_color": "E1BC95"
+      "height_in": 1.80,
+      "text_color": "E1BC95",
+      "number_left_in": 0.50,
+      "number_top_in": 6.65,
+      "number_color": "E1BC95"
     },
     "32-35": {
       "left_in": 0.90,
-      "top_in": 2.834,
+      "top_in": 2.83,
       "width_in": 4.70,
-      "height_in": 1.931,
-      "text_color": "FFFFFF"
+      "height_in": 1.93,
+      "text_color": "FFFFFF",
+      "number_left_in": 0.90,
+      "number_top_in": 6.65,
+      "number_color": "FFFFFF"
     }
   }
 }

@@ -1,0 +1,27 @@
+{
+  "width": 1920,
+  "height": 1080,
+  "aspect_ratio": "16:9",
+  "fps": 30,
+  "video_codec_preferred": "h264_nvenc",
+  "video_codec_fallback": "libx264",
+  "nvenc_options": {
+    "preset": "p4",
+    "cq": 20,
+    "pix_fmt": "yuv420p"
+  },
+  "libx264_options": {
+    "preset": "medium",
+    "crf": 18,
+    "tune": "stillimage",
+    "pix_fmt": "yuv420p"
+  },
+  "audio_codec": "aac",
+  "audio_bitrate": "192k",
+  "diagnostic_preview": {
+    "enabled": true,
+    "duration_sec": 15.0,
+    "sample_slides": [1, 2, 3],
+    "verification_timestamps": [1.0, 6.0, 11.0]
+  }
+}

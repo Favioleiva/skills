@@ -1,137 +1,121 @@
-# English Class Slides Skill (`v1.1`)
+# English Class Slides Skill (`v1.2`)
 
-A production-grade Antigravity agent skill for creating **multilingual educational slide decks** (English canonical, Latin American Spanish, authentic Japanese) with paired 16:9 anime watercolor backgrounds, single-sentence pedagogical layouts, and automated Google-Slides-compatible PowerPoint assembly.
+A production-grade Antigravity agent skill for creating **multilingual educational slide decks** (English canonical, Latin American Spanish, authentic Japanese) with paired 16:9 anime watercolor backgrounds, single-sentence pedagogical layouts, Google-Slides-compatible PowerPoint assembly, optional VOICEVOX audio synthesis, and synchronized Full HD presentation video generation.
 
 ---
 
 ## 1. Features & Design Philosophy
 
-* **Target Audience**: A1–A2 English/foreign language learners, Japanese classroom settings, international education.
+* **Target Audience**: A1–A2 English and foreign language learners, Japanese classroom environments, international education.
 * **Pedagogical Core**: **One Image + One Sentence**. Eliminates cognitive overload and maximizes read-aloud clarity.
-* **Staged Human-in-the-Loop Review**: Strict gating ensures English canonical content and image prompts are audited before localization begins.
+* **Three Flexible Production Levels**:
+  * **Level 1 — Slides Only**: Content generation, visual prompt engineering, and automated PowerPoint assembly.
+  * **Level 2 — Slides + Narration**: Adds Japanese kana phonetic layer and VOICEVOX TTS or recorded voice tracks.
+  * **Level 3 — Complete Multimedia Lesson**: Full HD 1080p MP4 presentation video with continuous master audio synchronization and YouTube chapter markers.
 * **100% Google Slides Native**: Automated assembly produces `.pptx` presentations styled with Google Fonts (`Cormorant Garamond`, `Nunito Sans`, `Noto Serif JP`, `Noto Sans JP`) ready for 1-click import into Google Drive.
-* **Background-Aware Typography**: Automatically adapts text positioning and colors for daytime (`#1A2433`), twilight (`#E1BC95`), and fireworks night (`#FFFFFF`) scenes.
-* **Production Economics**: Designed to maximize quality per minute of human effort while avoiding over-engineered presentations.
+* **Background-Aware Typography & Numbering**: Automatically adapts text positioning, font sizes, and contrast colors for daytime (`#1A2433`), travel open horizon, twilight matsuri (`#E1BC95`), and fireworks night (`#FFFFFF`).
 
 ---
 
-## 2. Installation & Directory Setup
+## 2. Directory Structure
 
-Place the `english-class-slides/` folder in your workspace or global Antigravity skills directory:
-
-### Workspace Installation:
 ```text
 your-project/
-└── .agents/
-    └── skills/
-        └── english-class-slides/
-            ├── SKILL.md
-            ├── README.md
-            ├── CHANGELOG.md
-            ├── templates/
-            ├── examples/
-            └── scripts/
-```
-
-### Add to `AGENTS.md`:
-```markdown
-# Slide Deck Generation
-Use the workspace skill `.agents/skills/english-class-slides/SKILL.md` for all slide-deck creation tasks.
+├── .agents/skills/english-class-slides/
+│   ├── SKILL.md
+│   ├── README.md
+│   ├── CHANGELOG.md
+│   ├── templates/
+│   │   ├── deck_config.template.json
+│   │   ├── slides_content_en.template.txt
+│   │   └── image_prompts.template.txt
+│   ├── examples/
+│   │   └── summer_vacation_japan/
+│   ├── notebooks/
+│   │   └── [Python]_Voicevox_text_to_speech_from_Japanese_text_to_Japanese_Speech.ipynb
+│   └── scripts/
+│       ├── build_pptx.py
+│       ├── validate_pptx.py
+│       ├── check_image_status.py
+│       ├── setup_voicevox_local_gpu.py
+│       ├── synthesize_presentation_audio.py
+│       ├── validate_audio.py
+│       ├── build_presentation_video.py
+│       └── validate_video.py
 ```
 
 ---
 
-## 3. Workflow Overview
+## 3. Workflow Quickstart
 
-### Phase 1: Canonical English + Image Prompts
-1. Agent creates:
-   * `output/slides_content_en.txt` (Slide 1 Cover + 50 single-sentence content slides + 2 vocabulary slides).
-   * `output/image_prompts.txt` (Designs 00–13 with 16:9 composition, left safe zones, and zero-text rules).
-2. **STOP FOR REVIEW**: Human audits the English phrasing, vocabulary selection, and visual prompts.
+### Level 1: Slide Decks Only
 
-### Phase 2: Multilingual Localization
-1. After receiving explicit `GO` or `approved`:
-   * `output/slides_content_es.txt` (Natural Latin American Spanish).
-   * `output/slides_content_ja.txt` (Culturally authentic Japanese).
-   * *(Optional)* `output/slides_reading_ja_kana.txt` (Japanese Kana Reading Layer preserving natural katakana for TTS engines).
-2. **Semantic Equivalence Rule**: Sentences and vocabulary are translated naturally for the target audience rather than mimicking English syntax.
+1. **Phase 1: Canonical English & Prompts**
+   * Generate `output/slides_content_en.txt`, `output/image_prompts.txt`, and `deck_config.json`.
+   * **Review Gate**: Stop and inspect canonical phrasing and image prompts.
 
-### Phase 3: Slide Deck Assembly (Optional Automated Step)
-1. Ensure image backgrounds exist in `output/images/` (`design_00_cover.png` through `design_13.png`).
-2. Run the build script:
+2. **Phase 2: Localization**
+   * After approval, generate `output/slides_content_es.txt` and `output/slides_content_ja.txt`.
+
+3. **Phase 3: Image Generation**
+   * Generate 16:9 background illustrations into `output/images/`.
+
+4. **Phase 4: PowerPoint Assembly**
    ```bash
-   python scripts/build_pptx.py --config templates/deck_config.template.json
+   python scripts/build_pptx.py --config deck_config.json --lang all
+   python scripts/validate_pptx.py
    ```
-3. Run the automated QA validator:
+
+---
+
+### Level 2: Slides + Narration (VOICEVOX Audio)
+
+1. **Phase 2B: Japanese Kana Reading Layer**
+   * Generate `output/slides_reading_ja_kana.txt` using continuous Japanese orthography (zero artificial whitespace).
+
+2. **Phase 5: Audio Synthesis**
+   * **Route A (Local Windows GPU)**:
+     ```bash
+     python scripts/setup_voicevox_local_gpu.py
+     python scripts/synthesize_presentation_audio.py --kana-file output/slides_reading_ja_kana.txt
+     python scripts/validate_audio.py --audio-dir Audio/Japanese
+     ```
+   * **Route B (Google Colab)**:
+     Open `notebooks/[Python]_Voicevox_text_to_speech_from_Japanese_text_to_Japanese_Speech.ipynb` and select *T4 GPU*.
+
+---
+
+### Level 3: Complete Multimedia Lesson (1080p Video)
+
+1. **Phase 6: Presentation Video Generation**
    ```bash
-   python scripts/validate_pptx.py --config templates/deck_config.template.json
+   # Japanese Presentation (with continuous master audio and hardware NVENC)
+   python scripts/build_presentation_video.py --config deck_config.json --lang ja
+
+   # English Presentation (with custom human voice recordings)
+   python scripts/build_presentation_video.py --config deck_config.json --lang en --audio-dir Audio/English
+
+   # Spanish Presentation (with custom human voice recordings)
+   python scripts/build_presentation_video.py --config deck_config.json --lang es --audio-dir Audio/Spanish
+   ```
+
+2. **Validate Final Video**:
+   ```bash
+   python scripts/validate_video.py --video output/summer_vacation_presentation_ja.mp4
    ```
 
 ---
 
-## 4. Image Generation Strategy & Quota Management
+## 4. Key Production Safeguards
 
-* **Antigravity CLI vs. Google AI Studio**:
-  * **CLI**: Ideal for initial style anchoring (Design 00 Cover) and prompt iteration, but may hit Cloud Code quota limits (`429 RESOURCE_EXHAUSTED`) during large multi-image runs.
-  * **Google AI Studio / Direct API**: Recommended for full 14+ image batch generation with Google AI Pro accounts without CLI session interruptions.
-* **Resume Logic**:
-  * Run `python scripts/check_image_status.py` to inspect missing vs. completed designs.
-  * Never restart from Design 00 or overwrite existing approved images.
+* **Continuous Japanese Prosody**: No whitespace between Japanese words in `slides_reading_ja_kana.txt` to prevent unnatural TTS pauses.
+* **Continuous Master Audio Architecture**: Merges all slide tracks into a single continuous master WAV to prevent playback DAC sleep, decoder resets, or initial consonant clipping.
+* **Constant Frame Rate (CFR) Video Encoding**: Enforces `-vf fps=30,format=yuv420p` and repeats the final frame in concat lists to ensure 100% video display compatibility across all media players.
+* **Zero-Docker GPU Execution**: Direct binary engine execution in both local Windows DirectML and Colab Linux GPU environments.
 
 ---
 
-## 5. Japanese Audio & Speech Synthesis (VOICEVOX)
+## 5. License & Credits
 
-When producing Japanese audio narration for the presentation:
-* **Primary / Recommended Workflow (Google Colab)**:
-  * Open `[Python]_Voicevox_text_to_speach_from_Japanese_text_to_Japanese_Speech.ipynb` in Google Colab.
-  * Upload `slides_reading_ja_kana.txt` or use the embedded 53-slide kana reading script.
-  * Colab sets up the VOICEVOX Engine automatically without requiring any local Docker or software installation.
-  * Generates 53 individual MP3 files (`slide_01.mp3` through `slide_53.mp3`) and packages them into `summer_vacation_ja_audio_mp3.zip`.
-* **Local GPU Execution (Optional)**:
-  * Only attempted if VOICEVOX Engine is already installed and actively running on `http://127.0.0.1:50021`.
-  * If local VOICEVOX or Docker is not installed, do not attempt local synthesis; proceed directly with the Google Colab workflow.
-
----
-
----
-
-## 6. Presentation Video Generator (1080p MP4)
-
-Automatically generates a synchronized 1080p MP4 presentation video by exporting high-resolution slide frames and pairing each slide with its recorded audio track:
-
-```bash
-# Japanese Presentation (with VOICEVOX or recorded audio)
-python scripts/build_presentation_video.py --lang ja --audio-dir Audio/Japanese
-
-# English Presentation (with custom voice recordings)
-python scripts/build_presentation_video.py --lang en --audio-dir Audio/English
-
-# Spanish Presentation (with custom voice recordings)
-python scripts/build_presentation_video.py --lang es --audio-dir Audio/Spanish
-```
-
-* **Custom Audio Parameters**:
-  * `--padding-pre 0.3`: Adds 0.3s of clean breathing space before speech.
-  * `--padding-post 0.5`: Adds 0.5s of smooth transition time after speech.
-  * Generates `_chapters.txt` timestamp markers for YouTube and video player navigation.
-
-### Japanese VOICEVOX Production Rule
-* Use continuous natural Japanese kana text (`slides_reading_ja_kana.txt` with zero artificial whitespace).
-* Use 0.5 seconds of native VOICEVOX pre-roll (`prePhonemeLength = 0.5`) and post-roll (`postPhonemeLength = 0.5`) for each isolated slide audio.
-* Do not reinforce individual initial moras unless a future controlled diagnostic demonstrates a separate phonetic problem.
-
----
-
-## 7. Script Utilities Reference
-
-* `scripts/check_image_status.py`: Inspects `output/images/` and reports completed and pending design numbers.
-* `scripts/build_pptx.py`: Generates the 3 `.pptx` decks using full-bleed backgrounds, split textframes, dynamic font sizing, and background-aware contrast colors.
-* `scripts/validate_pptx.py`: Verifies slide count (53), 16:9 dimensions, single-sentence content slides, vocabulary item counts, and phonetic kana compliance.
-* `scripts/build_presentation_video.py`: Assembles 1080p MP4 presentation videos with auto slide frame export and exact audio synchronization.
-
----
-
-## 8. License & Credits
-* **Author**: Favio Leiva (FL)
-* **Framework**: Crafted with GPT and FL; drafts and illustrations with Gemini.
+* **Framework & Design**: Favio Leiva (FL)
+* **License**: MIT

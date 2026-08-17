@@ -1,24 +1,23 @@
+#!/usr/bin/env python3
 """
-setup_voicevox_local_gpu.py (english-class-slides v1.1)
-
-Automated installer and manager for local VOICEVOX Engine on Windows
-using DirectML GPU acceleration (NVIDIA RTX 3060 compatible) — Zero Docker required.
+setup_voicevox_local_gpu.py - Inspects and launches local native VOICEVOX Engine with DirectML/GPU.
+Zero Docker required. Part of the english-class-slides (v1.2) skill package.
 """
 
 import os
-import subprocess
 import sys
 import time
-import requests
+import subprocess
+import argparse
 from pathlib import Path
+import requests
 
-VERSION = "0.25.2"
-ENGINE_DIR = Path("tools/voicevox_engine").resolve()
-HOST = "http://127.0.0.1:50021"
+DEFAULT_ENGINE_DIR = Path("tools/windows-directml")
+DEFAULT_HOST = "http://127.0.0.1:50021"
 
-def check_engine_online():
+def check_engine_health(host):
     try:
-        r = requests.get(f"{HOST}/version", timeout=2)
+        r = requests.get(f"{host}/version", timeout=1)
         if r.status_code == 200:
             return r.text.strip().strip('"')
     except Exception:
@@ -26,59 +25,49 @@ def check_engine_online():
     return None
 
 def main():
+    parser = argparse.ArgumentParser(description="Ensure local VOICEVOX GPU Engine is running.")
+    parser.add_argument("--host", default=DEFAULT_HOST, help="VOICEVOX host URL")
+    parser.add_argument("--engine-dir", default=str(DEFAULT_ENGINE_DIR), help="Directory containing run.exe")
+    parser.add_argument("--use-gpu", action="store_true", default=True, help="Enable GPU acceleration")
+    args = parser.parse_args()
+
     print("=" * 65)
-    print("LOCAL VOICEVOX ENGINE MANAGER (NVIDIA RTX 3060 / DirectML)")
+    print("VOICEVOX ENGINE LOCAL RUNNER (DirectML / Native GPU)")
     print("=" * 65)
 
-    # 1. Check if already online
-    current_ver = check_engine_online()
-    if current_ver:
-        print(f"[OK] VOICEVOX Engine is ALREADY ONLINE on port 50021!")
-        print(f"     Version: {current_ver}")
-        return True
+    ver = check_engine_health(args.host)
+    if ver:
+        print(f"[OK] VOICEVOX Engine is already running (v{ver}) on {args.host}!")
+        return
 
-    # 2. Check if installed
-    run_exe = ENGINE_DIR / "run.exe"
+    eng_path = Path(args.engine_dir).resolve()
+    run_exe = eng_path / "run.exe"
+
     if not run_exe.exists():
-        print(f"\n[1/3] DOWNLOADING OFFICIAL WINDOWS DIRECTML GPU RELEASE (v{VERSION})...")
-        ENGINE_DIR.mkdir(parents=True, exist_ok=True)
-        zip_url = f"https://github.com/VOICEVOX/voicevox_engine/releases/download/{VERSION}/voicevox_engine-windows-directml-{VERSION}.7z.001"
-        archive_path = ENGINE_DIR.parent / f"voicevox_engine-windows-directml-{VERSION}.7z.001"
+        print(f"[X] Engine binary not found: {run_exe}")
+        print("    Please download the official VOICEVOX DirectML release into tools/windows-directml/")
+        sys.exit(1)
 
-        if not archive_path.exists():
-            print(f"  Fetching: {zip_url}")
-            try:
-                import urllib.request
-                urllib.request.urlretrieve(zip_url, str(archive_path))
-                print(f"  Downloaded: {archive_path.stat().st_size / (1024*1024):.1f} MB")
-            except Exception as e:
-                print(f"  [X] Download failed: {e}")
-                return False
+    print(f"Starting {run_exe.name} in background...")
+    cmd = [str(run_exe), "--host", "127.0.0.1", "--port", "50021"]
+    if args.use_gpu:
+        cmd.append("--use_gpu")
 
-        print(f"\n[2/3] EXTRACTING ENGINE ARCHIVE...")
-        # Try 7z / tar / powershell
-        extract_cmd = ["tar", "-xf", str(archive_path), "-C", str(ENGINE_DIR.parent)]
-        res = subprocess.run(extract_cmd, capture_output=True)
-        if res.returncode != 0:
-            print(f"  Extraction note: {res.stderr.decode('utf-8', errors='replace')}")
+    log_file = open("tools/voicevox_engine.log", "w", encoding="utf-8")
+    proc = subprocess.Popen(cmd, stdout=log_file, stderr=subprocess.STDOUT, cwd=str(eng_path))
+    print(f"Process spawned with PID {proc.pid}. Polling /version...")
 
-    if run_exe.exists():
-        print(f"\n[3/3] STARTING VOICEVOX ENGINE (DirectML GPU Accelerated)...")
-        log_file = open(ENGINE_DIR / "engine.log", "w", encoding="utf-8")
-        proc = subprocess.Popen([str(run_exe), "--host", "127.0.0.1", "--port", "50021"],
-                                cwd=str(ENGINE_DIR), stdout=log_file, stderr=subprocess.STDOUT)
-        print(f"  Process started with PID: {proc.pid}")
+    for sec in range(30):
+        ver = check_engine_health(args.host)
+        if ver:
+            print(f"\n[OK] VOICEVOX Engine is ONLINE (v{ver}) on {args.host}!")
+            print("=" * 65)
+            return
+        time.sleep(1)
+        print(".", end="", flush=True)
 
-        # Poll /version
-        for sec in range(30):
-            v = check_engine_online()
-            if v:
-                print(f"\n[★ ONLINE] VOICEVOX Engine ready! Version: {v}")
-                return True
-            time.sleep(1)
-
-    print(f"\n[NOTE] If local engine binary is not yet extracted, you can start VOICEVOX desktop or run the engine on {HOST}.")
-    return False
+    print(f"\n[X] Engine failed to respond within 30 seconds. Check tools/voicevox_engine.log")
+    sys.exit(1)
 
 if __name__ == "__main__":
     main()

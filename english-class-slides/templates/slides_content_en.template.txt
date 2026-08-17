@@ -1,0 +1,50 @@
+SLIDE 1
+Design: 00
+Title: [Creative Presentation Title]
+Subtitle: [Engaging Subtitle]
+Author: Favio Leiva (FL)
+AI-Assisted Production: AI-assisted content, design and illustrations.
+Credits:
+Skill framework crafted by GPT and FL.
+Content drafts and illustrations created with Gemini.
+Final selection, auditing and revision by FL.
+
+SLIDE 2
+Design: 01
+Text: [Short, natural English sentence for A1-A2 learners to read aloud.]
+
+SLIDE 3
+Design: 01
+Text: [Second single sentence continuing the theme.]
+
+[... continue through SLIDE 51 ...]
+
+SLIDE 52
+Design: 13
+Title: Vocabulary 1
+Words:
+1. [concept_1] — [short clear learner definition]
+2. [concept_2] — [short clear learner definition]
+3. [concept_3] — [short clear learner definition]
+4. [concept_4] — [short clear learner definition]
+5. [concept_5] — [short clear learner definition]
+6. [concept_6] — [short clear learner definition]
+7. [concept_7] — [short clear learner definition]
+8. [concept_8] — [short clear learner definition]
+9. [concept_9] — [short clear learner definition]
+10. [concept_10] — [short clear learner definition]
+
+SLIDE 53
+Design: 13
+Title: Vocabulary 2
+Words:
+1. [concept_11] — [short clear learner definition]
+2. [concept_12] — [short clear learner definition]
+3. [concept_13] — [short clear learner definition]
+4. [concept_14] — [short clear learner definition]
+5. [concept_15] — [short clear learner definition]
+6. [concept_16] — [short clear learner definition]
+7. [concept_17] — [short clear learner definition]
+8. [concept_18] — [short clear learner definition]
+9. [concept_19] — [short clear learner definition]
+10. [concept_20] — [short clear learner definition]

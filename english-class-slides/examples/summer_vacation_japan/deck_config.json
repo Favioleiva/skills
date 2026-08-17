@@ -1,0 +1,57 @@
+{
+  "deck_name": "Summer Vacation in Japan",
+  "topic": "summer_vacation",
+  "slide_count": 53,
+  "content_slides_count": 50,
+  "vocab_slides_count": 2,
+  "paths": {
+    "content_en": "slides_content_en.txt",
+    "content_es": "slides_content_es.txt",
+    "content_ja": "slides_content_ja.txt",
+    "reading_ja_kana": "slides_reading_ja_kana.txt",
+    "image_prompts": "image_prompts.txt",
+    "images_dir": "../../output/images",
+    "output_pptx_en": "slides_summer_vacation_en.pptx",
+    "output_pptx_es": "slides_summer_vacation_es.pptx",
+    "output_pptx_ja": "slides_summer_vacation_ja.pptx"
+  },
+  "background_mapping": {
+    "1": "design_00_cover.png",
+    "2-5": "design_01.png",
+    "6-9": "design_02.png",
+    "10-13": "design_03.png",
+    "14-18": "design_04.png",
+    "19-22": "design_05.png",
+    "23-26": "design_06.png",
+    "27-31": "design_07.png",
+    "32-35": "design_08.png",
+    "36-39": "design_09.png",
+    "40-43": "design_10.png",
+    "44-47": "design_11.png",
+    "48-51": "design_12.png",
+    "52-53": "design_13.png"
+  },
+  "layout_overrides": {
+    "19-22": {
+      "left_in": 0.30,
+      "top_in": 2.20,
+      "width_in": 4.70,
+      "height_in": 3.20,
+      "text_color": "1A2433"
+    },
+    "27-31": {
+      "left_in": 0.50,
+      "top_in": 1.00,
+      "width_in": 4.70,
+      "height_in": 1.802,
+      "text_color": "E1BC95"
+    },
+    "32-35": {
+      "left_in": 0.90,
+      "top_in": 2.834,
+      "width_in": 4.70,
+      "height_in": 1.931,
+      "text_color": "FFFFFF"
+    }
+  }
+}

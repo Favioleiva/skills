@@ -1,0 +1,91 @@
+IMAGE PROMPTS
+COVER DESIGNS: 1
+CONTENT DESIGNS: 12
+VOCABULARY DESIGNS: 1
+TOTAL IMAGE DESIGNS: 14
+FORMAT: 16:9 landscape
+DEFAULT TEXT ZONE: left 40–45%
+
+DESIGN 00 — Cover: Summer Vacation in Japan
+Slides: 1
+Visual purpose: Cinematic, richly detailed flagship cover illustration establishing the summer vacation in Japan theme, with a deliberate, uncluttered title-and-credits area on the left and a breathtaking panoramic summer panorama on the right.
+Prompt:
+A cinematic, richly detailed, and breathtaking Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format, serving as the master cover backdrop. LEFT 40–45% provides an intentionally spacious, uncluttered, and calm negative space with a soft, warm azure-to-cream atmospheric gradient and gentle drifting clouds, perfectly designed for clean presentation title, subtitle, and production credits. RIGHT 55–60% unfolds into a magnificent, nostalgic panoramic Japanese summer scene combining quintessential summer motifs: a traditional Japanese town near coastal hills under a brilliant sunny blue sky, lush green mountain peaks, a distant sparkling blue sea with gentle whitecaps, blooming purple morning glory vines and a clear glass wind chime framing the foreground, and hints of festival lanterns glowing softly in the warm summer breeze. Radiant cinematic lighting, rich summery color palette with cobalt blue, emerald green, warm amber, and coral tones, evocative Studio Ghibli-inspired artistic quality. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 01 — Summer Begins & Sunny Skies
+Slides: 2-5
+Visual purpose: Opening visual establishing the cheerful start of summer vacation in Japan, with school backpacks set aside and bright blue skies.
+Prompt:
+A warm, nostalgic Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a wide, clean text-safe area composed of an expansive bright blue summer sky with gentle sunbeams and soft, distant white cumulus clouds, providing an uncluttered, high-readability background for text. RIGHT 55–60% features a cheerful Japanese school building entrance bordered by blooming green trees and a traditional glass wind chime swaying gently in the summer breeze, with happy Japanese elementary students walking out the gate wearing casual summer hats and carrying backpacks, celebrating the start of summer vacation. Vibrant, warm, optimistic color palette with sunny yellows, cobalt blues, and fresh leaf greens. Blank banners and unadorned surfaces. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 02 — Morning Routines & Blossoming Glories
+Slides: 6-9
+Visual purpose: Showcases early morning Japanese summer habits, including neighborhood park exercise and blooming morning glories.
+Prompt:
+A bright, refreshing Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a calm, text-safe open area with soft morning sunlight filtering through gentle, pale mint-green gradient air and distant hazy trees, perfectly clear for presentation text. RIGHT 55–60% features a vibrant sunlit veranda and neighborhood community park corner in the early morning, showing colorful potted morning glory vines in full purple and blue bloom, alongside smiling Japanese children doing radio calisthenics on the grass with a vintage radio on a wooden bench nearby. Gentle morning dew drops, soft golden hour glow, clean pastel tones, and nostalgic neighborhood scenery. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 03 — Classic Outdoor Fun & Water Games
+Slides: 10-13
+Visual purpose: Depicts playful summer activities like bug catching in the woods, swimming pools, and watermelon splitting on the lawn.
+Prompt:
+A lively, high-energy Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a clear, open text-safe zone featuring a calm patch of lush green lawn and soft defocused summer trees under a sunny sky, ideal for clean text overlay. RIGHT 55–60% showcases enthusiastic Japanese children engaged in summer outdoor fun: a boy holding a long insect net looking up at a beetle on a rustic oak tree, a blindfolded girl laughing with a wooden stick beside a striped watermelon on a grass picnic mat, and sparkling water droplets flying from water play. Sunny emerald greens, bright sky blues, and warm earth tones with sparkling sunlit textures. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 04 — Cool Summer Treats & Delicious Foods
+Slides: 14-18
+Visual purpose: Illustrates iconic Japanese summer foods including shaved ice kakigori, flowing bamboo somen, ramune soda, and savory festival snacks.
+Prompt:
+A delightful, mouth-watering Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is an uncluttered, text-safe area rendered with a soft, cool gradient of pale icy blue and gentle morning light across a smooth wooden tabletop, keeping the space clear of busy objects. RIGHT 55–60% showcases a vibrant assortment of Japanese summer culinary treats: an artisanal glass bowl of towering shaved ice kakigori topped with bright strawberry and matcha syrup, a split bamboo flume with flowing cold water carrying thin white somen noodles, an iconic glass ramune bottle with a marble inside, and a plate of grilled yakisoba. Fresh, vibrant colors, glistening ice crystals, and appetizing warmth. Unlabeled bottles and plain glass. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 05 — Journey Across Japan by Train & Plane
+Slides: 19-22
+Visual purpose: Illustrates the excitement of summer travel across Japan, featuring Shinkansen bullet trains, luggage, and scenic transit.
+Prompt:
+A dynamic, adventurous Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a calm, text-safe open expanse consisting of an expansive sunny sky and soft distant blue mountains, creating an uncluttered negative space for slide content. RIGHT 55–60% depicts a sleek, aerodynamic white and blue Japanese Shinkansen bullet train swiftly gliding along elevated railway tracks past emerald green countryside hills, with a family standing beside their colorful travel suitcases on a sunlit station platform, looking out across the picturesque landscape. Crisp architectural lines, radiant summer lighting, azure skies, and lush travel scenery. Blank train exterior without lettering. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 06 — Sun, Sand & Coastal Ocean Breezes
+Slides: 23-26
+Visual purpose: Captures seaside summer adventures, coastal beaches, snorkeling in turquoise waters, and relaxing at beach huts.
+Prompt:
+A breathtaking, sun-drenched Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a clean, tranquil text-safe zone showing smooth turquoise sea and open azure sky with soft golden sunbeams reflecting across the calm water surface. RIGHT 55–60% features a vibrant Japanese coastal beach scene: colorful parasols on golden sand, children building an intricate sandcastle, a wooden beach hut veranda with hanging straw blinds in the ocean breeze, and swimmers with snorkel masks splashing in crystal-clear tropical shallows. Sparkling sea foam, rich aquamarine and coral colors, and warm summery coastal atmosphere. Blank signs on the beach hut. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 07 — Vibrant Traditional Summer Matsuri
+Slides: 27-31
+Visual purpose: Portrays the excitement, color, and tradition of evening summer festivals, yukata robes, food stalls, and Bon Odori dance.
+Prompt:
+A festive, atmospheric Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a calm text-safe area rendered in deep twilight indigo sky with gentle warm glows diffusing softly at the edges, providing perfect contrast and legibility for text. RIGHT 55–60% bursts with festival celebration: glowing blank red and white paper lanterns strung between wooden posts, people dressed in elegant floral cotton yukata robes holding paper fans, a wooden yagura festival tower surrounded by dancers, and a lively food stall with a goldfish scooping kingyo-sukui water tub. Warm lantern illumination, rich cobalt night skies, vivid magenta and gold festival accents, and joyful cultural energy. Plain lanterns without writing. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 08 — Fireworks Festival & Night Sparklers
+Slides: 32-35
+Visual purpose: Illustrates spectacular riverbank fireworks displays and intimate handheld sparkler moments on warm summer nights.
+Prompt:
+A magical, dazzling Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a quiet, text-safe twilight sky of deep navy and dark velvet blue, smoothly blended to allow clear readability for text. RIGHT 55–60% showcases a breathtaking fireworks festival night: massive sparkling peony and chrysanthemum fireworks blooming in gold, violet, and emerald light across the night sky, reflected in the wide dark river below, while on the grassy riverbank a group in summer yukata happily holds glowing senko hanabi sparklers emitting delicate golden starbursts. Deep night contrast, luminous light bursts, gentle water reflections, and warm nostalgic celebration. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 09 — Countryside Serenity & Nature Discoveries
+Slides: 36-39
+Visual purpose: Explores tranquil rural landscapes, emerald rice terraces, cool mountain streams, and glowing fireflies at dusk.
+Prompt:
+A serene, lush Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a clean, tranquil text-safe area composed of open pale golden twilight sky and soft misty mountain contours, offering clear space for reading slide text. RIGHT 55–60% depicts an idyllic Japanese rural countryside landscape: tiered emerald-green rice paddies rippling in the wind, a crystal-clear mountain stream with flat stepping stones where a whole watermelon cools in the water, and gentle yellow-green fireflies glowing softly among tall reeds near a rustic wooden bridge. Deep nature greens, warm twilight amber, sparkling stream water, and peaceful rural nostalgia. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 10 — Obon Traditions & Hometown Reunion
+Slides: 40-43
+Visual purpose: Highlights the cultural significance of the Obon holiday, family homecoming, honoring ancestors, and guiding lanterns.
+Prompt:
+A deeply touching, culturally respectful Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is an open, calm text-safe area featuring a smooth, warm dusk sky gradient blending from soft apricot to twilight indigo, perfectly suited for clean text presentation. RIGHT 55–60% features a warm traditional Japanese countryside home during Obon: family members of different generations gathered on the veranda, a small welcoming mukae-bi fire glowing gently on a flat ceramic dish in the courtyard, traditional cucumber horse and eggplant ox figurines on a wooden tray, and gentle paper lanterns floating peacefully down a nearby evening river. Respectful, warm, golden hour lighting, rich wood textures, and profound familial love. Plain unwritten lanterns. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 11 — Peaceful Afternoons at Home & Family Bonds
+Slides: 44-47
+Visual purpose: Focuses on everyday home life, relaxing on tatami mats, eating watermelon on the engawa veranda, and indoor hobbies.
+Prompt:
+A warm, cozy Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a calm, text-safe space composed of soft, smooth interior tatami mat tones and light wooden shoji screen textures with gentle ambient daylight, providing high contrast and clean space for slide text. RIGHT 55–60% depicts a peaceful Japanese home interior: an open wooden engawa veranda looking out onto a lush green garden, a traditional ceramic pig mosquito coil burner, a glass wind chime hanging from the eaves, and family members happily resting on woven tatami mats eating sweet red watermelon slices while reading and doing summer crafts. Warm honey wood tones, soothing sage greens, gentle summer breezes, and serene home comfort. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 12 — Late Summer Twilight & Cherished Memories
+Slides: 48-51
+Visual purpose: Captures the nostalgic close of summer vacation, finishing diaries, golden late August sunsets, and looking forward to school.
+Prompt:
+An evocative, poetic Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a wide, text-safe area featuring a soft, expansive sunset sky with warm golden-orange, lavender, and peach gradients, offering maximum clarity for presentation text. RIGHT 55–60% depicts the nostalgic end of summer: a student standing on a gentle grassy hilltop overlooking a coastal town at late August sunset, holding a completed summer project notebook and school bag, with dragonflies darting through the golden twilight air and the distant sea shimmering in the fading light. Rich amber sunset glow, deep nostalgic warmth, gentle evening breeze, and uplifting hope for the new school term. Blank notebook cover without lettering. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 13 — Vocabulary
+Slides: 52-53
+Visual purpose: Dedicated clean vocabulary background that visually belongs to this presentation.
+Prompt:
+A serene, spacious, and elegant Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format, designed specifically as a calm vocabulary background. LEFT 50–55% is an exceptionally clean, wide, text-safe area with a very subtle, smooth pale cream and soft sky-blue gradient wash with minimal texture and zero focal elements, ensuring effortless readability for a ten-item vocabulary list. RIGHT 45–50% contains a cohesive and tranquil arrangement of iconic Japanese summer motifs: delicate blooming morning glory vines, a clear glass wind chime catching the light, subtle glowing festival lanterns in soft pastel tones, and a distant silhouette of gentle green hills under a bright summer sky. Soft harmonious color palette matching the rest of the presentation, airy composition, and balanced aesthetic. Plain unwritten lanterns. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.

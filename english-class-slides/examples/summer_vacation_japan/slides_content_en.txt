@@ -1,0 +1,251 @@
+PRESENTATION TITLE: Summer Vacation in Japan: Traditions, Festivals, and Sunny Memories
+LANGUAGE: English
+COVER SLIDES: 1
+CONTENT SLIDES: 50
+VOCABULARY SLIDES: 2
+TOTAL SLIDES: 53
+COVER DESIGNS: 1
+CONTENT DESIGNS: 12
+VOCABULARY DESIGNS: 1
+TOTAL IMAGE DESIGNS: 14
+
+SLIDE 1
+Design: 00
+Title: Summer Vacation in Japan
+Subtitle: Traditions, Festivals, and Sunny Memories
+Author: Favio Leiva (FL)
+AI-Assisted Production: AI-assisted content, design and illustrations.
+Credits:
+Skill framework crafted by GPT and FL.
+Content drafts and illustrations created with Gemini.
+Final selection, auditing and revision by FL.
+
+SLIDE 2
+Design: 01
+Text: Summer vacation begins in late July in Japan.
+
+SLIDE 3
+Design: 01
+Text: Cicadas sing loudly in the trees every morning.
+
+SLIDE 4
+Design: 01
+Text: Students make exciting plans with their friends.
+
+SLIDE 5
+Design: 01
+Text: Teachers give students homework books for the holiday.
+
+SLIDE 6
+Design: 02
+Text: Children meet in local parks for morning radio exercises.
+
+SLIDE 7
+Design: 02
+Text: They get a colorful stamp on their card each morning.
+
+SLIDE 8
+Design: 02
+Text: Many students water their morning glory plants at home.
+
+SLIDE 9
+Design: 02
+Text: Children write and draw in their summer picture diaries.
+
+SLIDE 10
+Design: 03
+Text: Kids wake up early to catch beetles in the forest.
+
+SLIDE 11
+Design: 03
+Text: Friends swim and splash together at the community pool.
+
+SLIDE 12
+Design: 03
+Text: Children play fun water gun games in the park.
+
+SLIDE 13
+Design: 03
+Text: Friends try to hit a watermelon with a wooden stick.
+
+SLIDE 14
+Design: 04
+Text: Sweet strawberry syrup is poured over fluffy shaved ice.
+
+SLIDE 15
+Design: 04
+Text: Cold white noodles slide down long bamboo pipes.
+
+SLIDE 16
+Design: 04
+Text: People pop the marble to open ice-cold ramune soda.
+
+SLIDE 17
+Design: 04
+Text: Food stalls sell hot fried noodles and grilled corn.
+
+SLIDE 18
+Design: 04
+Text: People eat grilled eel for energy on hot summer days.
+
+SLIDE 19
+Design: 05
+Text: Families pack suitcases with summer clothes and sun hats.
+
+SLIDE 20
+Design: 05
+Text: Fast bullet trains carry travelers through the countryside.
+
+SLIDE 21
+Design: 05
+Text: Airplanes fly families to sunny southern islands.
+
+SLIDE 22
+Design: 05
+Text: Families enjoy scenic drives along the ocean highway.
+
+SLIDE 23
+Design: 06
+Text: Swimmers relax under colorful umbrellas on the sandy beach.
+
+SLIDE 24
+Design: 06
+Text: Swimmers wear masks to watch colorful fish under the water.
+
+SLIDE 25
+Design: 06
+Text: Children build tall sandcastles and collect pretty seashells.
+
+SLIDE 26
+Design: 06
+Text: Beach huts offer cool drinks and shade from the sun.
+
+SLIDE 27
+Design: 07
+Text: Glowing paper lanterns light up lively festival streets.
+
+SLIDE 28
+Design: 07
+Text: People wear colorful cotton yukata and wooden sandals.
+
+SLIDE 29
+Design: 07
+Text: Game booths offer exciting games with fun prizes.
+
+SLIDE 30
+Design: 07
+Text: Children try to catch goldfish with delicate paper scoops.
+
+SLIDE 31
+Design: 07
+Text: Dancers circle the wooden stage to the sound of big drums.
+
+SLIDE 32
+Design: 08
+Text: Crowds sit along riverbanks to watch fireworks shows.
+
+SLIDE 33
+Design: 08
+Text: Huge colorful fireworks burst across the dark night sky.
+
+SLIDE 34
+Design: 08
+Text: Children hold sparkling sparklers in the quiet garden.
+
+SLIDE 35
+Design: 08
+Text: Watching the sparklers creates wonderful summer memories.
+
+SLIDE 36
+Design: 09
+Text: Families visit the quiet countryside for fresh air and nature.
+
+SLIDE 37
+Design: 09
+Text: Bright green rice fields stretch across the wide valley.
+
+SLIDE 38
+Design: 09
+Text: Clear mountain streams keep watermelons and drinks cool.
+
+SLIDE 39
+Design: 09
+Text: Glowing fireflies float softly near the water at dusk.
+
+SLIDE 40
+Design: 10
+Text: Obon is a special August holiday to honor ancestor spirits.
+
+SLIDE 41
+Design: 10
+Text: Families travel to their hometowns to visit their grandparents.
+
+SLIDE 42
+Design: 10
+Text: People clean family graves and offer flowers and incense.
+
+SLIDE 43
+Design: 10
+Text: Floating lanterns guide ancestral spirits safely down the river.
+
+SLIDE 44
+Design: 11
+Text: Families rest on cool tatami mats with electric fans blowing.
+
+SLIDE 45
+Design: 11
+Text: Everyone enjoys sweet cold watermelon on the wooden porch.
+
+SLIDE 46
+Design: 11
+Text: Family members play fun board games together in the evening.
+
+SLIDE 47
+Design: 11
+Text: Children build crafts and work on science projects at home.
+
+SLIDE 48
+Design: 12
+Text: Golden late August sunsets bring cooler evening breezes.
+
+SLIDE 49
+Design: 12
+Text: Students finish their remaining homework before school starts.
+
+SLIDE 50
+Design: 12
+Text: Photos and special memories remain in our hearts forever.
+
+SLIDE 51
+Design: 12
+Text: Students are excited to see their classmates in September.
+
+SLIDE 52
+Design: 13
+Title: Vocabulary 1
+Words:
+1. vacation — time away from school
+2. festival — a special celebration
+3. fireworks — colorful lights in the sky
+4. traditional — following old customs
+5. memory — something special you remember
+6. hometown — the town where your family lives
+7. refreshing — making you feel cool and fresh
+8. delicious — having a great taste; yummy
+9. insect — a small bug with six legs
+10. suitcase — a bag for traveling clothes
+
+SLIDE 53
+Design: 13
+Title: Vocabulary 2
+Words:
+1. lantern — a light inside a paper case
+2. countryside — land away from big cities
+3. ancestor — a family member from the past
+4. stall — a small stand selling food or goods
+5. stream — a small, clear river
+6. costume — special clothing for festivals or events
+7. luggage — bags you take on a trip
+8. energetic — full of energy and activity
+9. sparkler — a small handheld firework
+10. relaxed — feeling calm and peaceful

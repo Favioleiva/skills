@@ -1,0 +1,27 @@
+IMAGE PROMPTS
+TOPIC: [Topic Name]
+FORMAT: 16:9 landscape presentation background
+ART STYLE: Studio Ghibli-inspired warm Japanese anime editorial watercolor and gouache illustration
+DEFAULT TEXT SAFE ZONE: Left 40–45%
+VOCABULARY TEXT SAFE ZONE: Left 50–55%
+MANDATORY ZERO-TEXT RULE: All paper lanterns must be plain and unlettered. All stall awnings must be plain solid colors. All decorative fans must be blank. No kanji. No hiragana. No katakana. No Roman letters. No numbers. No logos. No signatures. No visible watermarks. No readable writing of any kind anywhere in the image.
+
+DESIGN 00 — Cover
+Slides: 1
+Visual purpose: Panoramic visual establishing shot of the topic, setting the visual identity, warm nostalgic atmosphere, and providing generous clean space on the left for title typography.
+Prompt:
+A breathtaking Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format. LEFT 40–45% is a wide, serene text-safe zone with soft sky, gentle distant contours, and warm sunlit atmosphere. RIGHT 55–60% features [thematic foreground and focal subject elements]. Rich luminous watercolor textures, warm palette. All lanterns/signs must be plain and unadorned. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+DESIGN 01 — [Thematic Block 1 Name]
+Slides: 2–5
+Visual purpose: [Purpose description]
+Prompt:
+A warm, inviting Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format, maintaining the exact artistic rendering style, lighting softness, and visual finish of the reference image, but do NOT copy anchor-specific props from previous scenes. LEFT 40–45% is a clean, tranquil text-safe zone. RIGHT 55–60% showcases [distinct focal scene for block 1]. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.
+
+[... Continue through DESIGN 12 ...]
+
+DESIGN 13 — Dedicated Vocabulary Background
+Slides: 52–53
+Visual purpose: Calm, spacious, high-legibility background sharing the same palette and artistic family, designed to support 10 lines of vocabulary text.
+Prompt:
+A tranquil, minimalist Japanese anime-style editorial watercolor and gouache illustration in 16:9 landscape presentation slide format, maintaining the exact visual family and soft lighting of the deck. LEFT 50–55% is a large, quiet, unadorned text-safe area with soft smooth gradients. RIGHT 45–50% contains subtle decorative framing elements representing the topic. No focal faces or high contrast behind the text area. No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.

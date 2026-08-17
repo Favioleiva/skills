@@ -1,0 +1,251 @@
+PRESENTATION TITLE: Vacaciones de verano en Japón: tradiciones, festivales y recuerdos de verano
+LANGUAGE: Spanish
+COVER SLIDES: 1
+CONTENT SLIDES: 50
+VOCABULARY SLIDES: 2
+TOTAL SLIDES: 53
+COVER DESIGNS: 1
+CONTENT DESIGNS: 12
+VOCABULARY DESIGNS: 1
+TOTAL IMAGE DESIGNS: 14
+
+DIAPOSITIVA 1
+Diseño: 00
+Título: Vacaciones de verano en Japón
+Subtítulo: Tradiciones, festivales y recuerdos de verano
+Autor: Favio Leiva (FL)
+Producción asistida por IA: Contenido, diseño e ilustraciones asistidos por IA.
+Créditos:
+Marco metodológico diseñado por GPT y FL.
+Borradores de contenido e ilustraciones creados con Gemini.
+Selección final, revisión y edición por FL.
+
+DIAPOSITIVA 2
+Diseño: 01
+Texto: En Japón, las vacaciones de verano empiezan a fines de julio.
+
+DIAPOSITIVA 3
+Diseño: 01
+Texto: Todas las mañanas, las cigarras cantan con fuerza entre los árboles.
+
+DIAPOSITIVA 4
+Diseño: 01
+Texto: Los estudiantes hacen planes divertidos con sus amigos.
+
+DIAPOSITIVA 5
+Diseño: 01
+Texto: Los profesores dan a los alumnos cuadernos de tareas para las vacaciones.
+
+DIAPOSITIVA 6
+Diseño: 02
+Texto: Los niños se reúnen en los parques del barrio para hacer ejercicios matutinos con la radio.
+
+DIAPOSITIVA 7
+Diseño: 02
+Texto: Cada mañana les ponen un sello de color en su tarjeta de asistencia.
+
+DIAPOSITIVA 8
+Diseño: 02
+Texto: Muchos alumnos riegan sus plantas de campanilla en casa.
+
+DIAPOSITIVA 9
+Diseño: 02
+Texto: Los niños escriben y dibujan en su diario de verano.
+
+DIAPOSITIVA 10
+Diseño: 03
+Texto: Los niños se levantan temprano para atrapar escarabajos en el bosque.
+
+DIAPOSITIVA 11
+Diseño: 03
+Texto: Los amigos van a nadar y a jugar en la piscina municipal.
+
+DIAPOSITIVA 12
+Diseño: 03
+Texto: Los niños se divierten jugando con pistolas de agua en el parque.
+
+DIAPOSITIVA 13
+Diseño: 03
+Texto: Los amigos intentan romper una sandía con un palo de madera.
+
+DIAPOSITIVA 14
+Diseño: 04
+Texto: Sobre el hielo raspado se vierte un dulce jarabe de fresa.
+
+DIAPOSITIVA 15
+Diseño: 04
+Texto: Los fideos blancos y fríos se deslizan por canales largos de bambú.
+
+DIAPOSITIVA 16
+Diseño: 04
+Texto: Para abrir una botella de ramune bien fría, se empuja la bolita de vidrio hacia adentro.
+
+DIAPOSITIVA 17
+Diseño: 04
+Texto: Los puestos de comida venden fideos salteados calientes y choclo asado.
+
+DIAPOSITIVA 18
+Diseño: 04
+Texto: En los días calurosos de verano, la gente come anguila a la parrilla para tener energía.
+
+DIAPOSITIVA 19
+Diseño: 05
+Texto: Las familias preparan sus maletas con ropa de verano y sombreros para el sol.
+
+DIAPOSITIVA 20
+Diseño: 05
+Texto: Los trenes bala llevan a los viajeros a gran velocidad por el campo.
+
+DIAPOSITIVA 21
+Diseño: 05
+Texto: Los aviones llevan a las familias a las soleadas islas del sur.
+
+DIAPOSITIVA 22
+Diseño: 05
+Texto: Las familias disfrutan paseando en auto por la carretera costera.
+
+DIAPOSITIVA 23
+Diseño: 06
+Texto: En la playa de arena, los bañistas descansan bajo sombrillas de colores.
+
+DIAPOSITIVA 24
+Diseño: 06
+Texto: Los nadadores usan máscaras de buceo para observar peces de colores bajo el agua.
+
+DIAPOSITIVA 25
+Diseño: 06
+Texto: Los niños arman castillos altos de arena y recogen conchitas a la orilla del mar.
+
+DIAPOSITIVA 26
+Diseño: 06
+Texto: Las casetas de playa ofrecen bebidas frías y sombra para protegerse del sol.
+
+DIAPOSITIVA 27
+Diseño: 07
+Texto: Los faroles de papel iluminan las calles llenas de vida durante el festival.
+
+DIAPOSITIVA 28
+Diseño: 07
+Texto: La gente usa yukatas coloridos de algodón y sandalias de madera.
+
+DIAPOSITIVA 29
+Diseño: 07
+Texto: En los puestos de feria hay juegos divertidos con premios para ganar.
+
+DIAPOSITIVA 30
+Diseño: 07
+Texto: Los niños intentan atrapar peces dorados con redes de papel muy frágiles.
+
+DIAPOSITIVA 31
+Diseño: 07
+Texto: Al ritmo de los tambores, los bailarines danzan alrededor de una torre de madera.
+
+DIAPOSITIVA 32
+Diseño: 08
+Texto: Mucha gente se sienta a la orilla del río para ver los espectáculos de fuegos artificiales.
+
+DIAPOSITIVA 33
+Diseño: 08
+Texto: Enormes fuegos artificiales de muchos colores estallan en el cielo nocturno.
+
+DIAPOSITIVA 34
+Diseño: 08
+Texto: En la tranquilidad del jardín, los niños sostienen bengalas encendidas.
+
+DIAPOSITIVA 35
+Diseño: 08
+Texto: Ver brillar las bengalas deja recuerdos hermosos del verano.
+
+DIAPOSITIVA 36
+Diseño: 09
+Texto: Las familias viajan al campo en busca de aire puro, calma y naturaleza.
+
+DIAPOSITIVA 37
+Diseño: 09
+Texto: Los arrozales de un verde intenso cubren todo el valle.
+
+DIAPOSITIVA 38
+Diseño: 09
+Texto: El agua fría y cristalina de los arroyos de montaña mantiene frescas las sandías y las bebidas.
+
+DIAPOSITIVA 39
+Diseño: 09
+Texto: Al anochecer, las luciérnagas flotan con su suave luz cerca del agua.
+
+DIAPOSITIVA 40
+Diseño: 10
+Texto: El Obon es una festividad especial de agosto para honrar a los antepasados.
+
+DIAPOSITIVA 41
+Diseño: 10
+Texto: Las familias regresan a sus lugares de origen para visitar a los abuelos.
+
+DIAPOSITIVA 42
+Diseño: 10
+Texto: La gente limpia las tumbas familiares y coloca flores e incienso.
+
+DIAPOSITIVA 43
+Diseño: 10
+Texto: Los faroles que flotan en el río guían de regreso a los espíritus de los antepasados.
+
+DIAPOSITIVA 44
+Diseño: 11
+Texto: Las familias descansan sobre el tatami mientras disfrutan del aire del ventilador.
+
+DIAPOSITIVA 45
+Diseño: 11
+Texto: En el porche de madera, todos disfrutan de una sandía dulce y fresca.
+
+DIAPOSITIVA 46
+Diseño: 11
+Texto: Por la noche, la familia se divierte con juegos de mesa en la sala.
+
+DIAPOSITIVA 47
+Diseño: 11
+Texto: En casa, los niños hacen manualidades y proyectos de ciencias.
+
+DIAPOSITIVA 48
+Diseño: 12
+Texto: A finales de agosto, los atardeceres dorados traen una brisa más fresca al caer la tarde.
+
+DIAPOSITIVA 49
+Diseño: 12
+Texto: Antes de que empiecen las clases, los estudiantes terminan las tareas que les faltaban.
+
+DIAPOSITIVA 50
+Diseño: 12
+Texto: Las fotos y los momentos especiales quedan para siempre en el corazón.
+
+DIAPOSITIVA 51
+Diseño: 12
+Texto: En septiembre, los estudiantes están felices de reencontrarse con sus compañeros de clase.
+
+DIAPOSITIVA 52
+Diseño: 13
+Título: Vocabulario 1
+Palabras:
+1. vacaciones — días libres sin clases ni trabajo
+2. festival — fiesta popular con música y comida
+3. fuegos artificiales — luces de colores en el cielo nocturno
+4. tradicional — que sigue costumbres de antes
+5. recuerdo — momento especial del pasado
+6. lugar de origen — ciudad o pueblo donde nació o creció una persona
+7. refrescante — que quita el calor y da energía
+8. delicioso — muy rico y sabroso al comer
+9. insecto — animal pequeño de seis patas
+10. maleta — bolsa rígida para llevar ropa al viajar
+
+DIAPOSITIVA 53
+Diseño: 13
+Título: Vocabulario 2
+Palabras:
+1. farol — luz protegida por papel o tela
+2. campo — zona verde lejos de la ciudad
+3. antepasado — familiar de generaciones pasadas
+4. puesto de venta — caseta donde se vende comida o cosas
+5. arroyo — río pequeño de agua cristalina
+6. vestimenta especial — ropa que se usa para fiestas o eventos
+7. equipaje — bultos y maletas para un viaje
+8. enérgico — lleno de vitalidad y entusiasmo
+9. bengala — varita que suelta chispas de colores
+10. relajado — tranquilo y sin preocupaciones

@@ -68,6 +68,7 @@ Canonical EN -> ES + JA localization -> JA text review -> Japanese kana reading 
     * **1-to-1 Alignment & Natural Wording**: Must derive directly from `slides_content_ja.txt` preserving exact 1-to-1 slide ordering (53 entries) without paraphrasing, simplifying, or translating independently.
     * **No Romaji / No Ruby Tags**: Output only directly pronounceable kana without romaji or annotation tags like `漢字(かんじ)`.
     * **Prosodic Punctuation**: Keep commas (`、`), periods (`。`), and spacing to guide speech engines (VOICEVOX, VOICEPEAK, ElevenLabs, Google/Azure TTS) toward natural phrasing and breathing pauses.
+    * **TTS Execution Strategy**: Default to the Google Colab workflow (`[Python]_Voicevox_text_to_speach_from_Japanese_text_to_Japanese_Speech.ipynb`) to avoid local Docker/engine setup overhead. Local GPU synthesis is strictly optional and should only be attempted when VOICEVOX Engine is already verified as running locally on `http://127.0.0.1:50021`.
 * **Never alter approved Phase 1 files** during Phase 2 unless explicitly instructed.
 
 ### PHASE 3 — Automated PPTX Assembly (Optional)

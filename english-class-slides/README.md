@@ -80,11 +80,25 @@ Use the workspace skill `.agents/skills/english-class-slides/SKILL.md` for all s
 
 ---
 
-## 5. Script Utilities Reference
+## 5. Japanese Audio & Speech Synthesis (VOICEVOX)
+
+When producing Japanese audio narration for the presentation:
+* **Primary / Recommended Workflow (Google Colab)**:
+  * Open `[Python]_Voicevox_text_to_speach_from_Japanese_text_to_Japanese_Speech.ipynb` in Google Colab.
+  * Upload `slides_reading_ja_kana.txt` or use the embedded 53-slide kana reading script.
+  * Colab sets up the VOICEVOX Engine automatically without requiring any local Docker or software installation.
+  * Generates 53 individual MP3 files (`slide_01.mp3` through `slide_53.mp3`) and packages them into `summer_vacation_ja_audio_mp3.zip`.
+* **Local GPU Execution (Optional)**:
+  * Only attempted if VOICEVOX Engine is already installed and actively running on `http://127.0.0.1:50021`.
+  * If local VOICEVOX or Docker is not installed, do not attempt local synthesis; proceed directly with the Google Colab workflow.
+
+---
+
+## 6. Script Utilities Reference
 
 * `scripts/check_image_status.py`: Inspects `output/images/` and reports completed and pending design numbers.
 * `scripts/build_pptx.py`: Generates the 3 `.pptx` decks using full-bleed backgrounds, split textframes, dynamic font sizing, and background-aware contrast colors.
-* `scripts/validate_pptx.py`: Verifies slide count (53), 16:9 dimensions, single-sentence content slides, vocabulary item counts, and font size compliance.
+* `scripts/validate_pptx.py`: Verifies slide count (53), 16:9 dimensions, single-sentence content slides, vocabulary item counts, and phonetic kana compliance.
 
 ---
 

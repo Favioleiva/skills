@@ -116,6 +116,11 @@ python scripts/build_presentation_video.py --lang es --audio-dir Audio/Spanish
   * `--padding-post 0.5`: Adds 0.5s of smooth transition time after speech.
   * Generates `_chapters.txt` timestamp markers for YouTube and video player navigation.
 
+### Japanese VOICEVOX Production Rule
+* Use continuous natural Japanese kana text (`slides_reading_ja_kana.txt` with zero artificial whitespace).
+* Use 0.5 seconds of native VOICEVOX pre-roll (`prePhonemeLength = 0.5`) and post-roll (`postPhonemeLength = 0.5`) for each isolated slide audio.
+* Do not reinforce individual initial moras unless a future controlled diagnostic demonstrates a separate phonetic problem.
+
 ---
 
 ## 7. Script Utilities Reference

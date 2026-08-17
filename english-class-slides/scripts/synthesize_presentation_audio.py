@@ -112,24 +112,11 @@ def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="
     query["intonationScale"] = 1.0
     query["volumeScale"] = 1.0
 
-    # 2. Universal 0.5s pre/post silence buffer for all slides
+    # 2. Global 0.5s native pre/post roll padding for all slides
     query["prePhonemeLength"] = 0.50
     query["postPhonemeLength"] = 0.50
 
-    # 3. Universal first-mora attack protection for all slides
-    try:
-        accent_phrases = query.get("accent_phrases", [])
-        if accent_phrases and accent_phrases[0].get("moras"):
-            first_mora = accent_phrases[0]["moras"][0]
-            if first_mora.get("consonant") is not None or first_mora.get("consonant_length") is not None:
-                curr_c = first_mora.get("consonant_length") or 0.0
-                first_mora["consonant_length"] = max(curr_c, 0.12)
-            curr_v = first_mora.get("vowel_length") or 0.0
-            first_mora["vowel_length"] = max(curr_v, 0.15)
-    except Exception:
-        pass
-
-    # 4. Synthesize uncompressed WAV bytes
+    # 3. Synthesize uncompressed WAV bytes
     wav_resp = requests.post(
         f"{host}/synthesis",
         params={"speaker": speaker_id},
@@ -161,17 +148,18 @@ def main():
     parser.add_argument("--output-dir", default="Audio/Japanese", help="Output directory for MP3 files")
     parser.add_argument("--host", default="http://127.0.0.1:50021", help="VOICEVOX host URL")
     parser.add_argument("--speaker-id", type=int, default=13, help="Speaker ID (default: 13 Aoyama Ryusei)")
-    parser.add_argument("--force-regenerate", nargs="*", type=int, default=[1], help="Slide IDs to force regenerate (default: 1)")
+    parser.add_argument("--force-regenerate", nargs="*", type=int, default=[], help="Slide IDs to force regenerate (e.g. 1 2)")
+    parser.add_argument("--force-all", action="store_true", help="Force regenerate all slides")
     args = parser.parse_args()
 
     print("=" * 65)
-    print("PRESENTATION AUDIO SYNTHESIZER (VOICEVOX / RTX 3060)")
+    print("PRESENTATION AUDIO SYNTHESIZER (VOICEVOX / DirectML GPU)")
     print("=" * 65)
     print(f"Input Kana       : {args.kana_file}")
     print(f"Output Dir       : {args.output_dir}")
     print(f"Host URL         : {args.host}")
     print(f"Speaker ID       : {args.speaker_id}")
-    print(f"Force Regenerate : {args.force_regenerate}")
+    print(f"Force All        : {args.force_all}")
     print("=" * 65)
 
     # Check connection
@@ -189,7 +177,7 @@ def main():
     slide_texts = parse_kana_slides(args.kana_file)
     print(f"[+] Loaded {len(slide_texts)} continuous-kana slide entries.\n")
 
-    force_set = set(args.force_regenerate)
+    force_set = set(range(1, len(slide_texts) + 1)) if args.force_all else set(args.force_regenerate)
     start_time = time.time()
     generated_count = 0
     skipped_count = 0

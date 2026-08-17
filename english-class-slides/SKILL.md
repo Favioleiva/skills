@@ -1,226 +1,278 @@
----
-name: english-class-slides
-version: 1.1
-description: Production skill for generating high-quality multilingual educational slide decks (EN canonical, ES, JA) with paired 16:9 anime watercolor image prompts, pedagogical single-sentence layouts, and automated Google-Slides-compatible PPTX assembly.
----
+# Skill: English Class Slides — Staged Multilingual TXT Workflow
 
-# Skill: English Class Slides (v1.1)
+## Purpose
+Create English-class slide decks in a staged review workflow. English is always the canonical/source deck. Image prompts are created alongside English. Spanish and Japanese are generated only after explicit user approval.
 
-## 1. Overview & Core Philosophy
+This skill creates plain-text deliverables only. Do not create PPTX/PDF/DOCX unless explicitly requested in a later task.
 
-This skill orchestrates the end-to-end production of reusable, multilingual educational presentations designed specifically for:
-* **Target Audience**: A1–A2 English/foreign language learners, young students, and international classrooms.
-* **Languages**: Canonical English (`EN`), natural Latin American Spanish (`ES`), and authentic Japanese (`JA`).
-* **Pedagogical Formula**: **One Image + One Short Sentence + Reusable Visual System**.
-* **Economic Objective**: **Maximize sufficient quality per minute of human work**. Keep designs clean, elegant, and low-friction rather than adding decorative complexity.
+## Required workflow — DO NOT SKIP GATES
 
----
-
-## 2. Core Staged Workflow (Strict Gate Rules)
-
-```
-[Phase 1: Canonical EN + Image Prompts]
-                 │
-                 ▼
-        [Human Review Gate] ────(Feedback / Edits)────┐
-                 │                                    │
-           (Explicit GO)                              │
-                 │                                    │
-                 ▼                                    │
-    [Phase 2: Localization ES & JA]                   │
-                 │                                    │
-                 ▼                                    │
-   [Optional Phase 3: PPTX Assembly]                  │
-                 │                                    │
-                 ▼                                    │
-        [Validated Presentations] ◄───────────────────┘
-```
-
-### PHASE 1 — Canonical English + Image Prompts (MANDATORY GATE)
+### PHASE 1 — English + image prompts
 On the initial request, generate ONLY:
 1. `output/slides_content_en.txt`
 2. `output/image_prompts.txt`
 
-**STOP IMMEDIATELY FOR USER REVIEW.**
-* Do **NOT** generate Spanish or Japanese translations yet.
-* Do **NOT** generate image assets yet.
-* The English deck is canonical: all pedagogical pacing, vocabulary items, and slide counts are finalized here first.
+Then STOP. Do not generate Spanish or Japanese yet. Tell the user Phase 1 is ready for review and wait for explicit approval such as `GO`, `approved`, or an equivalent instruction.
 
-### PHASE 2 — Localization (Only After Explicit Approval)
-Only after the user provides explicit approval (e.g. `GO`, `approved`), generate:
-1. `output/slides_content_es.txt`
-2. `output/slides_content_ja.txt`
-3. *(Optional)* `output/slides_reading_ja_kana.txt` (Japanese Kana Reading Layer for TTS / speech engines)
+If the user requests corrections, edit the English deck and/or image prompts, re-run QA, save the corrected files, and STOP again for review.
 
-**Localization Workflow & Sequence**:
-```text
-Canonical EN -> ES + JA localization -> JA text review -> Japanese kana reading layer -> TTS / external reader
-```
+### PHASE 2 — translations, only after explicit approval
+After explicit approval of Phase 1, generate ONLY:
+3. `output/slides_content_es.txt`
+4. `output/slides_content_ja.txt`
 
-**Localization Rules**:
-* **Semantic equivalence, not syntactic equivalence**: Reconstruct sentences as a native speaker naturally expresses the proposition.
-* **Spanish (`ES`)**: Use natural Latin American Spanish (Peruvian standard). Avoid mechanical translations of English adjective order (e.g. avoid *"Los rápidos trenes bala"*, use *"Los trenes bala llevan a los viajeros a gran velocidad por el campo"*). Use authentic regional terminology when natural (e.g. *"choclo"*, *"bolita de vidrio"*).
-* **Japanese (`JA`) Distinction — Visible vs. Spoken Layers**:
-  * **Visible Japanese Layer (`slides_content_ja.txt`)**: Natural written Japanese for slide display (standard kanji, hiragana, katakana, and natural orthography).
-  * **Spoken Japanese Layer (`slides_reading_ja_kana.txt`)**: Deterministic phonetic input for the external reading/TTS program.
-    * **Preserve Natural Katakana**: The reading program supports both hiragana and katakana. Preserve katakana for loanwords, foreign names, and words normally written in katakana (e.g. `ラジオたいそう`, `カブトムシ`, `スイカ`, `ラムネ`, `ビーだま`, `ポイ`, `パラソル`, `ドライブ`, `クラスメイト`, `テーブル`, `ボードゲーム`, `スーツケース`, `スタミナ`, `エーアイ`, `エフエル`). Do NOT force all text into hiragana.
-    * **Deterministic Kanji & Number Conversion**: Convert all kanji, dates, counters, numbers, and abbreviations into their intended spoken pronunciation (e.g. `7月下旬` → `しちがつ げじゅん`, `8月` → `はちがつ`, `9月` → `くがつ`, `6本足` → `ろっぽんあし`, `AI` → `エーアイ`, `FL` → `エフエル`).
-    * **1-to-1 Alignment & Natural Wording**: Must derive directly from `slides_content_ja.txt` preserving exact 1-to-1 slide ordering (53 entries) without paraphrasing, simplifying, or translating independently.
-    * **No Romaji / No Ruby Tags**: Output only directly pronounceable kana without romaji or annotation tags like `漢字(かんじ)`.
-    * **Prosodic Punctuation**: Keep commas (`、`), periods (`。`), and spacing to guide speech engines (VOICEVOX, VOICEPEAK, ElevenLabs, Google/Azure TTS) toward natural phrasing and breathing pauses.
-    * **TTS Execution Strategy**: Default to the Google Colab workflow (`[Python]_Voicevox_text_to_speach_from_Japanese_text_to_Japanese_Speech.ipynb`) to avoid local Docker/engine setup overhead. Local GPU synthesis is strictly optional and should only be attempted when VOICEVOX Engine is already verified as running locally on `http://127.0.0.1:50021`.
-* **Never alter approved Phase 1 files** during Phase 2 unless explicitly instructed.
+Spanish and Japanese must be translations of the FINAL APPROVED English deck, never independent rewrites.
 
-### PHASE 3 — Automated PPTX Assembly (Optional)
-When image assets are ready in `output/images/`, run the assembly pipeline (`scripts/build_pptx.py`) to generate widescreen 16:9 Google-Slides-compatible presentations:
-* `output/slides_<topic>_en.pptx`
-* `output/slides_<topic>_es.pptx`
-* `output/slides_<topic>_ja.pptx`
+Do not alter `slides_content_en.txt` or `image_prompts.txt` during Phase 2 unless the user explicitly asks.
 
----
+## Preferred input
+TOPIC: [topic]
+CONTENT SLIDES: [number of ordinary teaching slides]
+DESIGNS: [number of visual designs]
+LEVEL: [English learner level]
+SPECIAL CONTENT: [required topics]
+AUDIENCE: [optional]
+TONE: [optional]
+VISUAL STYLE: [optional]
 
-## 3. Pedagogical Slide Architecture
+If the user says `SLIDES: N`, interpret N as CONTENT SLIDES unless they explicitly say the count includes vocabulary slides.
 
-Each standard deck comprises **53 slides** (Slide 1 Cover + 50 Content + 2 Vocabulary) unless a different count is explicitly specified.
+Defaults:
+- CONTENT SLIDES: 50
+- DESIGNS: 12
+- LEVEL: A1–A2
+- English: clear international English
+- Visual format: 16:9 landscape
+- Text-safe zone: left 40–45%
 
-```
-┌────────────────────────────────────────────────────────┐
-│ SLIDE 1: COVER                                         │
-│ - Design 00                                            │
-│ - Main Title, Subtitle, Author: Favio Leiva (FL)       │
-│ - Bottom Frame: Production & AI credits                │
-├────────────────────────────────────────────────────────┤
-│ SLIDES 2–51: 50 CONTENT SLIDES                         │
-│ - Designs 01–12 (grouped by thematic blocks)           │
-│ - Exactly ONE short, natural sentence (A1–A2 level)    │
-│ - ZERO slide titles, ZERO bullet points, ZERO clutter  │
-├────────────────────────────────────────────────────────┤
-│ SLIDES 52–53: VOCABULARY (10 items each, 20 total)     │
-│ - Design 13 (Dedicated calm background)                │
-│ - Slide 52: Vocabulary 1 / Vocabulario 1 / 重要単語 1   │
-│ - Slide 53: Vocabulary 2 / Vocabulario 2 / 重要単語 2   │
-│ - 1-to-1 semantic parity with native headwords         │
-└────────────────────────────────────────────────────────┘
-```
+## Slide count rule
+The deck consists of:
+- N ordinary content slides requested by the user, PLUS
+- 2 mandatory vocabulary slides at the end.
 
-### Slide 1 — Cover
-* **Top-Left Frame**:
-  * Title (Large editorial font)
-  * Subtitle (Medium italic/serif)
-  * Author: `Favio Leiva (FL)` (Full name once, abbreviated `FL` subsequently)
-* **Bottom-Left Separate Frame**:
-  * AI-Assisted Production summary
-  * 3-line production credits:
-    ```text
-    AI-assisted content, design and illustrations.
+Therefore TOTAL SLIDES = CONTENT SLIDES + 2.
 
-    Skill framework crafted by GPT and FL.
-    Content drafts and illustrations created with Gemini.
-    Final selection, auditing and revision by FL.
-    ```
+Example: CONTENT SLIDES: 50 => TOTAL SLIDES: 52.
 
-### Slides 2–51 — Content Slides
-* **Rule**: Exactly **ONE short, natural sentence** per slide.
-* **No Slide Titles**: The sentence itself is the complete text.
-* **Classroom Readability**: 25–30 pt body font size, 1.3 line spacing.
-* **Left Safe Area**: Positioned in the left 40–45% negative space of the illustration.
+The vocabulary slides are always the final two slides:
+- Slide N+1: Vocabulary 1 — 10 important English words from the deck
+- Slide N+2: Vocabulary 2 — 10 additional important English words from the deck
 
-### Slides 52–53 — Vocabulary Slides
-* **Rule**: Exactly **10 vocabulary concepts** on Slide 52, and **10 concepts** on Slide 53 (20 total).
-* **Target-Language Headwords**: Do **NOT** keep English headwords in Spanish or Japanese decks. Each file uses native headwords and definitions:
-  * **EN**: `fireworks — colorful lights in the night sky`
-  * **ES**: `fuegos artificiales — luces de colores en el cielo nocturno`
-  * **JA**: `花火 — 夜空を彩る光`
-* **Format**: Bold headword (22–24 pt) + em-dash + regular definition (20–24 pt).
+Use 20 unique vocabulary items total. Prefer high-value words that actually appear in, or are directly necessary for, the approved deck. Avoid duplicates and trivial function words.
 
----
+## Canonical language rule
+English is the canonical/source version.
 
-## 4. Visual System & Prompt Engineering
+Workflow:
+ENGLISH SEMANTIC CONTENT -> SPANISH TRANSLATION
+                         -> JAPANESE TRANSLATION
 
-### Dimensions & Layout
-* **Aspect Ratio**: 16:9 widescreen landscape.
-* **Composition**:
-  * **Left 40–45%**: Calm text-safe zone (pale sky, soft water, blurred background, smooth gradient).
-  * **Right 55–60%**: Rich storytelling, characters, architecture, focal action.
-  * **Vocabulary (Design 13)**: Left 50–55% clean safe zone; subtle framing on right.
-* **Art Style**: Studio Ghibli-inspired warm Japanese anime editorial watercolor and gouache.
+Never use Spanish or Japanese to redefine the English meaning.
 
-### Safeguard 1: Preventing "Reference Motif Leakage"
-When using a reference image (e.g. Design 00) for visual style consistency, models often copy specific scene props (e.g., morning glory vines, wind chimes) into unrelated scenes (bullet trains, riverbanks, beaches).
-* **Requirement**: Prompts inheriting a style reference MUST explicitly separate **STYLE** from **SCENE PROPS**:
-  ```text
-  Maintain the exact watercolor rendering style, lighting softness, and visual finish of the reference image, but do NOT copy its specific objects, morning glory vines, wind chimes, or porch decorations. Use only the objects explicitly requested for this new scene.
-  ```
+## Phase 1 file: `output/slides_content_en.txt`
+Use this format:
 
-### Safeguard 2: Zero-Text Enforcement on Cultural Props
-Anime illustrations of Japanese festivals, storefronts, and train stations frequently hallucinate pseudo-kanji or gibberish letters.
-* **Requirement**: Prompts MUST explicitly require plain, unlettered surfaces:
-  ```text
-  All paper lanterns must be plain and unlettered. All stall awnings must be plain solid colors. All decorative paper fans must be blank with simple floral patterns. No kanji. No hiragana. No katakana. No Roman letters. No numbers. No logos. No signatures. No readable writing of any kind anywhere in the image.
-  ```
+PRESENTATION TITLE: [creative English title]
+SUBTITLE: [optional]
+LANGUAGE: English
+CONTENT SLIDES: [N]
+VOCABULARY SLIDES: 2
+TOTAL SLIDES: [N+2]
+CONTENT DESIGNS: [D]
+TOTAL IMAGE DESIGNS: [D+1]
 
----
+SLIDE 1
+Design: 1
+Title: ...
+Text: ...
 
-## 5. Image Generation & Execution Strategy
+[continue through content slide N]
 
-### Platform Differences: CLI vs. Google AI Studio
-1. **Antigravity CLI**:
-   * Uses native `generate_image` tool via Cloud Code (`cloudcode-pa.googleapis.com` / `gemini-3.1-flash-image`).
-   * Enforces a **strict session rate-limit** (typically `429 RESOURCE_EXHAUSTED` with multi-hour reset windows after generating ~8–9 high-res images).
-2. **Google AI Studio / Direct API**:
-   * Has significantly higher / unthrottled generation limits for Google AI Pro users.
-   * Ideal for rapid batch processing of all 14 prompts in one pass.
+SLIDE N+1
+Design: [appropriate design]
+Title: Vocabulary 1
+Words:
+1. word — short learner-friendly English meaning
+...
+10. word — short learner-friendly English meaning
 
-### Recommended Hybrid Strategy
-* **Step 1 (CLI)**: Generate the Cover (Design 00) and representative style anchor image using `generate_image` in Antigravity CLI. Refine prompts iteratively.
-* **Step 2 (Batch)**: If the CLI session hits a 429 quota threshold, export `output/image_prompts.txt` and generate the remaining batch in **Google AI Studio** or via a direct API script.
-* **Step 3 (Resume Logic)**: Run `scripts/check_image_status.py` to inspect `output/images/`.
+SLIDE N+2
+Design: [appropriate design]
+Title: Vocabulary 2
+Words:
+1. word — short learner-friendly English meaning
+...
+10. word — short learner-friendly English meaning
 
-### Quota Recovery & Resume Protocol (MANDATORY)
-* **Never discard completed images** or restart from Design 00 upon hitting a quota limit.
-* Identify existing files (`design_00_cover.png`, `design_01.png`, etc.) and resume generation from the first missing design index.
-* Report status clearly: `Completed: Designs 00–08 | Pending: Designs 09–13`.
+## Phase 2 Spanish file: `output/slides_content_es.txt`
+It must have exactly the same slide numbers, order, design assignments, claims, examples, dates, names, quantities, certainty, and pedagogical purpose as the approved English file.
 
----
+For ordinary slides:
+DIAPOSITIVA N
+Diseño: D
+Título: [natural equivalent]
+Texto: [natural semantically equivalent Spanish]
 
-## 6. Background-Aware Typography & Presets
+For vocabulary slides, KEEP THE SAME ENGLISH HEADWORDS so they remain useful for English class, and translate the meanings:
 
-To ensure optimal contrast across varied watercolor backgrounds, use these established presets:
+DIAPOSITIVA N+1
+Diseño: D
+Título: Vocabulario 1
+Palabras:
+1. English word — significado breve en español
+...
 
-| Scene Type | Example Designs | Text Position | Text Color | Font Specs |
-| :--- | :--- | :--- | :--- | :--- |
-| **Standard Daytime** | 01, 02, 03, 04, 06, 09, 10, 11, 12 | `L: 0.90"`, `T: 2.20"`, `W: 4.70"` | `#1A2433` (Charcoal Navy) | 26–30 pt Bold, 1.3 line spacing |
-| **Open Horizon / Travel** | 05 (Shinkansen / Planes) | `L: 0.30"`, `T: 2.20"`, `W: 4.70"` | `#1A2433` (Charcoal Navy) | 28–30 pt Bold (uses wide left space) |
-| **Twilight / Matsuri** | 07 (Festival Night) | `L: 0.50"`, `T: 1.00"`, `W: 4.70"` | `#E1BC95` (Warm Peach/Gold) | 28–30 pt Bold (sits in dark twilight sky) |
-| **Night / Fireworks** | 08 (Hanabi Riverbank) | `L: 0.90"`, `T: 2.83"`, `W: 4.70"` | `#FFFFFF` (Pure White) | 28–30 pt Bold (sits in dark river sky) |
-| **Vocabulary 1 & 2** | 13 (Dedicated Clean Background) | Title: `T: 0.75"`<br>List: `T: 1.32"`, `W: 7.10"` | Headword: `#102238`<br>Def: `#1A2433` | Title: 25 pt Bold<br>Headword: 24 pt Bold<br>Def: 20–24 pt Regular |
+Use neutral natural Spanish. Do not add explanations absent from English.
 
-### Font System (Google Slides Native)
-* **English & Spanish**:
-  * Cover Title & Subtitle: `Cormorant Garamond` (Semibold / Medium)
-  * Body, Author, Credits, Vocabulary: `Nunito Sans` (Bold / Regular)
-* **Japanese**:
-  * Cover Title & Subtitle: `Noto Serif JP` (Bold / Medium)
-  * Body, Author, Credits, Vocabulary: `Noto Sans JP` (Medium / Bold)
+## Phase 2 Japanese file: `output/slides_content_ja.txt`
+It must have exactly the same slide numbers, order, design assignments, claims, examples, dates, names, quantities, certainty, and pedagogical purpose as the approved English file.
 
----
+For ordinary slides:
+スライド N
+デザイン: D
+タイトル: [natural equivalent]
+本文: [natural semantically equivalent Japanese]
 
-## 7. Background Library & Reuse Strategy
+For vocabulary slides, KEEP THE SAME ENGLISH HEADWORDS and translate the meanings:
 
-Before generating new illustrations, check if existing approved backgrounds from previous decks can be reused:
-* **Reusable Categories**: Beach, Matsuri, Shinkansen, Countryside, Obon, Hanabi Fireworks, Tatami Room/Engawa, School Gate, Autumn Sunset, Sakura Spring, Winter Holiday.
-* **Economic Threshold**: A background is acceptable when it looks good, fits the visual family, provides text safe space, and contains zero unwanted text. **Do NOT regenerate an otherwise strong image because a single minor noun is absent.**
+スライド N+1
+デザイン: D
+タイトル: Vocabulary 1 / 重要単語 1
+単語:
+1. English word — 日本語の短い意味
+...
 
----
+Use natural modern classroom Japanese. Common kanji are preferred. Do not add furigana unless requested. Do not over-explain Japanese cultural concepts.
 
-## 8. Quality Assurance & Validation Checklist
+## Translation equivalence — mandatory
+For every ordinary slide, EN = ES = JA in semantic content.
 
-Before delivering final presentations, execute `python scripts/validate_pptx.py`:
+Translations may change grammar, word order, idiom, or sentence segmentation for naturalness, but must not:
+- add or omit facts;
+- add examples in only one language;
+- soften or intensify claims;
+- change dates, numbers, places, people, activities, or cultural references;
+- change singular/plural or time reference in a meaning-changing way;
+- make Japanese more detailed than English;
+- simplify Spanish until information disappears.
 
-1. **Slide Count**: Exactly 53 slides in each presentation (1 Cover + 50 Content + 2 Vocabulary).
-2. **One-Sentence Rule**: Zero slide titles on Slides 2–51; exactly one sentence per content slide.
-3. **Vocabulary Count**: Exactly 10 items on Slide 52 and 10 items on Slide 53 (20 total).
-4. **Multilingual Parity**: EN, ES, and JA slide counts and semantic meanings are 1-to-1 aligned.
-5. **No Text Overflow**: No text frames overflow beyond slide boundaries; zero font reductions below 24 pt on content slides.
-6. **Full-Bleed Images**: Background images fill the 16:9 canvas (13.333″ × 7.500″) without distortion or white borders.
-7. **Color Contrast**: Dark scenes (07, 08) use light text (`#E1BC95`, `#FFFFFF`); daytime scenes use dark charcoal (`#1A2433`).
+For vocabulary slides:
+- the 20 English headwords must be identical in all three files;
+- the short definitions/translations must be equivalent;
+- order must be identical.
+
+## Content style
+- Give the presentation a creative title.
+- Build a deliberate progression: opening/context -> core experiences/concepts -> cultural/detail sections -> memorable conclusion -> vocabulary.
+- Keep English concise, natural, classroom-friendly, and matched to LEVEL.
+- Prefer short sentences/compact slide lines over paragraphs.
+- Avoid unnecessary repetition.
+- Keep cultural/factual claims accurate and avoid stereotypes or invented traditions.
+
+## Design allocation
+Create exactly D CONTENT designs, plus 1 mandatory dedicated VOCABULARY design.
+Therefore TOTAL IMAGE DESIGNS = D + 1.
+- Divide the N content slides approximately evenly among Designs 1..D while respecting thematic boundaries.
+- Each content slide belongs to exactly one content design.
+- Keep each content design on a contiguous range where practical.
+- Give every design a short evocative name.
+- Both vocabulary slides MUST use Design D+1.
+- Design D+1 is exclusively the Vocabulary design and must not be counted inside the user-requested D content designs.
+- The Vocabulary design should preserve the deck's visual identity but be calmer and more spacious than ordinary content designs.
+
+## Phase 1 file: `output/image_prompts.txt`
+This file covers all requested designs and includes the vocabulary slides in the appropriate final design assignment.
+
+Format:
+IMAGE PROMPTS
+CONTENT DESIGNS: [D]
+TOTAL IMAGE DESIGNS: [D+1]
+FORMAT: 16:9 landscape
+DEFAULT TEXT ZONE: left 40–45%
+
+DESIGN 1 — [name]
+Slides: [range]
+Visual purpose: ...
+Prompt:
+[complete prompt]
+
+[continue through DESIGN D]
+
+DESIGN D+1 — Vocabulary
+Slides: [N+1]-[N+2]
+Visual purpose: Dedicated clean vocabulary background that visually belongs to this presentation.
+Prompt:
+[complete vocabulary-specific prompt]
+
+Vocabulary prompt requirements:
+- same overall visual language, palette, rendering quality, and thematic identity as the content designs;
+- substantially calmer composition with approximately LEFT 50–55% clean text-safe space because each vocabulary slide contains 10 entries;
+- decorative/theme-specific elements concentrated on the RIGHT 45–50% and/or subtle outer edges;
+- no focal objects, faces, high contrast, or busy texture behind the vocabulary list;
+- designed to work unchanged for BOTH vocabulary slides;
+- obey the same no-text/no-logo/no-watermark prohibition as every other prompt.
+
+## Permanent image composition rules
+Every prompt must specify:
+- 16:9 landscape presentation background;
+- polished educational/editorial illustration or requested style;
+- LEFT 40–45% calm text-safe area;
+- RIGHT 55–60% contains main characters, faces, important objects, architecture, and detailed storytelling;
+- no important focal information behind the left text zone;
+- left zone visually integrated with the scene using sky, wall, gradient, sand, water, distant landscape, darkness, defocused foliage, subtle texture, etc.;
+- enough tonal uniformity for several lines of readable slide text;
+- coherent rendering language and quality across all designs in the deck.
+
+Every prompt MUST explicitly include this prohibition:
+`No visible text. No letters. No captions. No readable signs or labels. No logo. No signature. No visible watermark. No branding. No UI elements.`
+
+If the scene normally contains labeled signs, bottles, banners, packages, lanterns, school signs, etc., request blank/unreadable decorative surfaces.
+
+## Image generation is NOT part of this skill
+This skill writes image prompts only. It does not call an image model and does not generate PNG/JPG files. Image generation should be handled by a separate skill/task after `image_prompts.txt` is approved.
+
+## Phase 1 QA before stopping for review
+Verify:
+1. English has exactly N content slides + 2 vocabulary slides.
+2. Total slide count is N+2.
+3. Exactly D content designs + 1 dedicated vocabulary design exist (D+1 image prompts total).
+4. Slides are consecutive and each has one design assignment.
+5. Designs 1..D cover content slides exactly once; both vocabulary slides use Design D+1.
+6. Vocabulary slides contain exactly 10 items each, 20 unique English headwords total.
+7. Vocabulary is relevant to the deck and appropriate to LEVEL.
+8. Every image prompt says 16:9.
+9. Content image prompts protect left 40–45% for text; the Vocabulary prompt protects approximately left 50–55%.
+10. Every image prompt puts focal detail primarily on the right.
+11. Every image prompt contains the full no-text/no-logo/no-watermark prohibition.
+12. `slides_content_en.txt` contains no image prompts and `image_prompts.txt` contains no unnecessary slide body copy.
+
+Then STOP and wait for approval.
+
+## Phase 2 QA before completion
+Verify:
+1. ES and JA have exactly the same total slide count as approved EN.
+2. Slide numbers and design assignments match EN exactly.
+3. Every ordinary slide is semantically equivalent across EN/ES/JA.
+4. No substantive information was added or removed.
+5. Titles preserve meaning and function.
+6. Dates, numbers, names, places, examples, and certainty match.
+7. The 20 English vocabulary headwords are identical and in the same order in EN/ES/JA.
+8. Vocabulary meanings are equivalent in Spanish and Japanese.
+9. Phase 2 did not silently modify the approved English or image-prompt files.
+
+## Strict staged output behavior
+Initial run: create ONLY
+- `output/slides_content_en.txt`
+- `output/image_prompts.txt`
+
+After explicit user approval: create ONLY
+- `output/slides_content_es.txt`
+- `output/slides_content_ja.txt`
+
+Never bypass the review gate.
+
+## Japanese VOICEVOX Audio Synthesis Production Rule
+- Use continuous natural Japanese kana text (`slides_reading_ja_kana.txt` with zero artificial whitespace).
+- Use 0.5 seconds of native VOICEVOX pre-roll (`prePhonemeLength = 0.5`) and post-roll (`postPhonemeLength = 0.5`) for each isolated slide audio.
+- Do not reinforce individual initial moras unless a future controlled diagnostic demonstrates a separate phonetic problem.
+

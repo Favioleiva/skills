@@ -29,6 +29,7 @@ All notable changes to the `english-class-slides` skill will be documented in th
   - Added `scripts/validate_pptx.py` for automated QA auditing.
   - Added `scripts/check_image_status.py` for tracking asset completion.
 - **Background Library & Economic Reuse Policy**: Added guidelines for building and reusing approved background assets to reduce generation overhead for future topics.
+- **VOICEVOX Audio Synthesis Production Rule**: Standardized continuous natural Japanese kana text without artificial spaces, and global 0.5s native pre-roll and post-roll padding (`prePhonemeLength = 0.5`, `postPhonemeLength = 0.5`) to protect initial consonant attacks from playback DAC/decoder clipping without artificial mora manipulation.
 
 ### Changed
 - Refined Spanish translation instructions to enforce natural Latin American / Peruvian syntax and vocabulary (e.g. *"bolita de vidrio"*, *"choclo"*) over direct English calques.

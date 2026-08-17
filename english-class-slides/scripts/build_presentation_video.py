@@ -82,9 +82,24 @@ def export_pptx_slides_to_images(pptx_path, output_dir, width=1920, height=1080,
     print(f"  [OK] Exported all {slide_count} slides to PNG (1920x1080) successfully.")
     return image_paths
 
+def check_nvenc_support(ffmpeg_exe):
+    test_cmd = [
+        ffmpeg_exe, "-y",
+        "-f", "lavfi", "-i", "color=c=black:s=64x64:d=0.1",
+        "-c:v", "h264_nvenc",
+        "-f", "null", "-"
+    ]
+    try:
+        res = subprocess.run(test_cmd, capture_output=True, text=True)
+        return res.returncode == 0
+    except Exception:
+        return False
+
 def build_presentation_video(pptx_path, audio_dir, output_video, padding_pre=0.3, padding_post=0.5, fps=30):
     start_time = time.time()
     ffmpeg_exe = get_ffmpeg()
+    has_nvenc = check_nvenc_support(ffmpeg_exe)
+    accel_label = "NVIDIA NVENC (RTX 3060 Hardware Acceleration)" if has_nvenc else "CPU (libx264)"
 
     print("=" * 65)
     print("PRESENTATION VIDEO GENERATOR (english-class-slides v1.1)")
@@ -92,6 +107,7 @@ def build_presentation_video(pptx_path, audio_dir, output_video, padding_pre=0.3
     print(f"Presentation : {pptx_path}")
     print(f"Audio Source : {audio_dir}")
     print(f"Output Video : {output_video}")
+    print(f"Acceleration : {accel_label}")
     print(f"Timing Guard : Pre: +{padding_pre}s | Post: +{padding_post}s | FPS: {fps}")
     print("=" * 65)
 
@@ -141,7 +157,7 @@ def build_presentation_video(pptx_path, audio_dir, output_video, padding_pre=0.3
     print(f"  [OK] Total Video Duration: {total_mins:02d}:{total_secs:02d} ({total_audio_time:.2f}s)")
 
     # 3. Assemble and Encode Video with FFmpeg
-    print(f"\n[3/3] RENDERING 1080p MP4 VIDEO WITH FFMPEG...")
+    print(f"\n[3/3] RENDERING 1080p MP4 VIDEO WITH FFMPEG ({accel_label})...")
     os.makedirs(os.path.dirname(output_video) or ".", exist_ok=True)
     temp_dir = os.path.join(os.path.dirname(output_video), f"tmp_{Path(output_video).stem}")
     os.makedirs(temp_dir, exist_ok=True)
@@ -155,12 +171,15 @@ def build_presentation_video(pptx_path, audio_dir, output_video, padding_pre=0.3
         seg_output = os.path.join(temp_dir, f"seg_{i+1:02d}.mp4")
 
         # Build FFmpeg command for segment:
-        # Pre-delay audio by padding_pre, pad total audio length to clip_dur
-        # Video: loop image for clip_dur at 30 fps
         filter_complex = (
             f"[1:a]adelay={int(padding_pre*1000)}|{int(padding_pre*1000)},"
             f"apad=whole_dur={clip_dur:.3f}[aout]"
         )
+
+        if has_nvenc:
+            v_args = ["-c:v", "h264_nvenc", "-preset", "p5", "-rc", "vbr", "-cq", "19", "-pix_fmt", "yuv420p"]
+        else:
+            v_args = ["-c:v", "libx264", "-tune", "stillimage", "-preset", "medium", "-crf", "18", "-pix_fmt", "yuv420p"]
 
         cmd = [
             ffmpeg_exe, "-y",
@@ -171,11 +190,7 @@ def build_presentation_video(pptx_path, audio_dir, output_video, padding_pre=0.3
             "-filter_complex", filter_complex,
             "-map", "0:v",
             "-map", "[aout]",
-            "-c:v", "libx264",
-            "-tune", "stillimage",
-            "-preset", "medium",
-            "-crf", "18",
-            "-pix_fmt", "yuv420p",
+            *v_args,
             "-r", str(fps),
             "-c:a", "aac",
             "-b:a", "192k",

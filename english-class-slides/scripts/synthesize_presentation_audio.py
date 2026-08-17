@@ -1,0 +1,151 @@
+"""
+synthesize_presentation_audio.py (english-class-slides v1.1)
+
+Synthesizes presentation audio from slides_reading_ja_kana.txt via VOICEVOX API
+(runs locally against RTX 3060 GPU or remote/Colab tunnel at 127.0.0.1:50021).
+"""
+
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+from pathlib import Path
+import requests
+
+# Ensure UTF-8 output on Windows
+if sys.stdout.encoding != "utf-8":
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
+def get_ffmpeg():
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except ImportError:
+        return "ffmpeg"
+
+def parse_kana_slides(kana_file_path):
+    with open(kana_file_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    raw_slides = re.split(r"(?:スライド)\s+(\d+)", content)
+    parsed_dict = {}
+    for i in range(1, len(raw_slides), 2):
+        s_num = int(raw_slides[i])
+        parsed_dict[s_num] = raw_slides[i+1].strip()
+
+    slide_texts = []
+    for i in range(1, len(parsed_dict) + 1):
+        tb = parsed_dict[i]
+        if i == 1:
+            title, subtitle, author = "", "", ""
+            for l in tb.split("\n"):
+                if l.startswith("タイトル:"): title = l.replace("タイトル:", "").strip().replace(" ", "").replace("　", "")
+                elif l.startswith("サブタイトル:"): subtitle = l.replace("サブタイトル:", "").strip().replace(" ", "").replace("　", "")
+                elif l.startswith("著者:"): author = l.replace("著者:", "").strip().replace(" ", "").replace("　", "")
+            spoken = f"{title}。{subtitle}。{author}。"
+        elif 2 <= i <= 51:
+            spoken = ""
+            for l in tb.split("\n"):
+                if l.startswith("本文:"):
+                    spoken = l.replace("本文:", "").strip().replace(" ", "").replace("　", "")
+                    break
+        else:
+            title = ""
+            words = []
+            for l in tb.split("\n"):
+                l = l.strip()
+                if l.startswith("タイトル:"): title = l.replace("タイトル:", "").strip().replace(" ", "").replace("　", "")
+                elif re.match(r"^\d+\.\s*", l):
+                    item = re.sub(r"^\d+\.\s*", "", l).strip()
+                    item_clean = item.replace("—", "、").replace(" ", "").replace("　", "").strip()
+                    words.append(item_clean)
+            spoken = f"{title}。" + "。".join(words) + "。"
+        slide_texts.append(spoken)
+    return slide_texts
+
+def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="128k"):
+    # 1. Query
+    query_resp = requests.post(f"{host}/audio_query", params={"text": text, "speaker": speaker_id}, timeout=60)
+    query = query_resp.json()
+    query["speedScale"] = 0.95
+    query["pitchScale"] = 0.0
+    query["intonationScale"] = 1.0
+    query["volumeScale"] = 1.0
+    query["prePhonemeLength"] = 0.1
+    query["postPhonemeLength"] = 0.1
+
+    # 2. Synthesize WAV
+    wav_resp = requests.post(
+        f"{host}/synthesis",
+        params={"speaker": speaker_id},
+        data=json.dumps(query),
+        headers={"Content-Type": "application/json"},
+        timeout=120
+    )
+    wav_bytes = wav_resp.content
+
+    # 3. Convert to MP3
+    cmd = [
+        ffmpeg_exe, "-y",
+        "-hide_banner", "-loglevel", "error",
+        "-i", "pipe:0",
+        "-vn", "-codec:a", "libmp3lame",
+        "-b:a", bitrate,
+        str(out_mp3_path)
+    ]
+    res = subprocess.run(cmd, input=wav_bytes, capture_output=True)
+    if res.returncode != 0:
+        raise RuntimeError(f"FFmpeg error: {res.stderr.decode('utf-8', errors='replace')}")
+
+def main():
+    parser = argparse.ArgumentParser(description="Synthesize Japanese presentation slides audio via VOICEVOX.")
+    parser.add_argument("--kana-file", default="output/slides_reading_ja_kana.txt", help="Path to kana reading file")
+    parser.add_argument("--output-dir", default="Audio/Japanese", help="Output directory for MP3 files")
+    parser.add_argument("--host", default="http://127.0.0.1:50021", help="VOICEVOX host URL")
+    parser.add_argument("--speaker-id", type=int, default=13, help="Speaker ID (default: 13 Aoyama Ryusei)")
+    args = parser.parse_args()
+
+    print("=" * 65)
+    print("PRESENTATION AUDIO SYNTHESIZER (VOICEVOX / RTX 3060)")
+    print("=" * 65)
+    print(f"Input Kana  : {args.kana_file}")
+    print(f"Output Dir  : {args.output_dir}")
+    print(f"Host URL    : {args.host}")
+    print(f"Speaker ID  : {args.speaker_id}")
+    print("=" * 65)
+
+    # Check connection
+    try:
+        ver_res = requests.get(f"{args.host}/version", timeout=3)
+        if ver_res.status_code == 200:
+            print(f"[OK] Connected to VOICEVOX Engine (v{ver_res.text.strip()})")
+    except Exception:
+        print(f"[X] ERROR: Could not connect to VOICEVOX Engine at {args.host}.")
+        print("    Please start the engine using Google Colab or local DirectML/GPU runner.")
+        sys.exit(1)
+
+    ffmpeg_exe = get_ffmpeg()
+    os.makedirs(args.output_dir, exist_ok=True)
+    slide_texts = parse_kana_slides(args.kana_file)
+    print(f"[+] Loaded {len(slide_texts)} continuous-kana slide entries.\n")
+
+    start_time = time.time()
+    for idx, text in enumerate(slide_texts, start=1):
+        out_mp3 = Path(args.output_dir) / f"slide_{idx:02d}.mp3"
+        print(f"  [{idx:02d}/{len(slide_texts)}] Synthesizing {out_mp3.name}...")
+        synthesize_slide(args.host, args.speaker_id, text, out_mp3, ffmpeg_exe)
+
+    elapsed = time.time() - start_time
+    print("\n" + "=" * 65)
+    print(f"★ SYNTHESIS COMPLETE! 53 MP3 files generated in: {args.output_dir}")
+    print(f"★ Elapsed Time: {elapsed:.1f} seconds (avg {elapsed/53:.2f}s per slide)")
+    print("=" * 65)
+
+if __name__ == "__main__":
+    main()

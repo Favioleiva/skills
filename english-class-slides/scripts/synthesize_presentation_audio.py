@@ -103,7 +103,7 @@ def pad_wav_pcm(raw_wav_bytes, pre_sec=0.500, post_sec=0.500):
 
     return out_io.getvalue()
 
-def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="128k", reinforce_first_mora=False, save_raw_wav=None, save_padded_wav=None):
+def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="128k", save_raw_wav=None, save_padded_wav=None):
     # 1. Query
     query_resp = requests.post(f"{host}/audio_query", params={"text": text, "speaker": speaker_id}, timeout=60)
     query = query_resp.json()
@@ -112,28 +112,29 @@ def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="
     query["intonationScale"] = 1.0
     query["volumeScale"] = 1.0
 
-    if reinforce_first_mora:
-        query["prePhonemeLength"] = 0.5
-        query["postPhonemeLength"] = 0.5
-        try:
-            first_mora = query["accent_phrases"][0]["moras"][0]
-            if first_mora.get("text") == "ニ":
+    # 2. Universal 0.5s pre/post silence buffer for all slides
+    query["prePhonemeLength"] = 0.50
+    query["postPhonemeLength"] = 0.50
+
+    # 3. Universal first-mora attack protection for all slides
+    try:
+        accent_phrases = query.get("accent_phrases", [])
+        if accent_phrases and accent_phrases[0].get("moras"):
+            first_mora = accent_phrases[0]["moras"][0]
+            if first_mora.get("consonant_length") is not None:
                 first_mora["consonant_length"] = max(
-                    first_mora.get("consonant_length") or 0,
+                    first_mora["consonant_length"],
                     0.10
                 )
+            if first_mora.get("vowel_length") is not None:
                 first_mora["vowel_length"] = max(
-                    first_mora.get("vowel_length") or 0,
+                    first_mora["vowel_length"],
                     0.14
                 )
-                print(f"  [VOICEVOX] Reinforced initial ニ mora for {Path(out_mp3_path).name}")
-        except (KeyError, IndexError, TypeError):
-            pass
-    else:
-        query["prePhonemeLength"] = 0.1
-        query["postPhonemeLength"] = 0.1
+    except Exception:
+        pass
 
-    # 2. Synthesize uncompressed WAV bytes
+    # 4. Synthesize uncompressed WAV bytes
     wav_resp = requests.post(
         f"{host}/synthesis",
         params={"speaker": speaker_id},
@@ -146,13 +147,7 @@ def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="
     if save_raw_wav:
         Path(save_raw_wav).write_bytes(raw_wav_bytes)
 
-    # 3. Prepend & Append 500ms digital silence to raw WAV
-    padded_wav_bytes = pad_wav_pcm(raw_wav_bytes, pre_sec=0.500 if reinforce_first_mora else 0.100, post_sec=0.500 if reinforce_first_mora else 0.100)
-
-    if save_padded_wav:
-        Path(save_padded_wav).write_bytes(padded_wav_bytes)
-
-    # 4. Convert padded WAV to MP3 without any filter, trimming, or fade
+    # 5. Convert uncompressed WAV to MP3 with clean FFmpeg
     cmd = [
         ffmpeg_exe, "-y",
         "-hide_banner", "-loglevel", "error",
@@ -161,7 +156,7 @@ def synthesize_slide(host, speaker_id, text, out_mp3_path, ffmpeg_exe, bitrate="
         "-b:a", bitrate,
         str(out_mp3_path)
     ]
-    res = subprocess.run(cmd, input=padded_wav_bytes, capture_output=True)
+    res = subprocess.run(cmd, input=raw_wav_bytes, capture_output=True)
     if res.returncode != 0:
         raise RuntimeError(f"FFmpeg error: {res.stderr.decode('utf-8', errors='replace')}")
 
@@ -216,8 +211,7 @@ def main():
             speaker_id=args.speaker_id,
             text=text,
             out_mp3_path=out_mp3,
-            ffmpeg_exe=ffmpeg_exe,
-            reinforce_first_mora=(idx == 1)
+            ffmpeg_exe=ffmpeg_exe
         )
         generated_count += 1
 

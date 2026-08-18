@@ -12,6 +12,9 @@ All notable changes to the `english-class-slides` skill will be documented in th
   - Replaced legacy per-slide segmented MP4 concatenation with a single continuous Master Audio WAV pipeline.
   - Eliminates DAC wake-up attenuation, audio driver sleep, decoder restarts, and consonant clipping across all slide transitions.
   - Reduces final video file size by over 50% through single-pass AAC encoding.
+- **Acoustic Playback Rationale Correction**:
+  - *Clarification on v1.1*: Earlier v1.1 guidance attributed first-consonant protection to 0.5 s native pre/post padding. Controlled playback experiments in v1.2 showed that silent padding alone is insufficient.
+  - The validated video architecture uses a single sacrificial startup signal (`ピッ` + 150 ms gap) followed by one continuous master audio stream and a single final AAC encode.
 - **Continuous Japanese Kana Prosody & Zero-Whitespace Rule**:
   - Enforced continuous Japanese orthography in `slides_reading_ja_kana.txt` (eliminated artificial spaces that caused VOICEVOX phrase fragmentation).
   - Preserves natural katakana for loanwords and onomatopoeia with prosodic punctuation (`、`, `。`).
@@ -21,7 +24,7 @@ All notable changes to the `english-class-slides` skill will be documented in th
   - Added query validation verifying submitted text against returned `query["kana"]` before synthesis.
   - Added `TEST_MODE` for rapid sample slide verification (`[1, 2, 10, 30]`).
   - Added 3-stage raw (`.wav`), padded (`.wav`), and encoded (`.mp3`) diagnostic preservation.
-  - Standardized 0.5s pre/post silence buffer at the uncompressed PCM WAV stage.
+  - Standardized 0.5s pre/post silence buffer at the uncompressed PCM WAV stage as standard synthesis headroom.
 - **Configurable Visible Slide Numbering (Phase 4B)**:
   - Added native slide numbering across EN, ES, and JA presentations with background-aware contrast presets (`#1A2433` daytime, `#E1BC95` twilight, `#FFFFFF` night).
   - Full configuration support in `deck_config.json` (`exclude_cover`, `exclude_vocabulary`, `start_number`, `position`, `font_size_pt`).

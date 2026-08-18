@@ -86,15 +86,15 @@ When Japanese narration or TTS is required, generate `slides_reading_ja_kana.txt
 ### Synthesis Best Practices
 * **Query Validation**: Inspect returned `query["kana"]` against submitted text before synthesis.
 * **Test Mode**: Synthesize sample slides (`[1, 2, 10, 30]`) to audit audio quality before full batch.
-* **Native Pre/Post Padding**: Use `prePhonemeLength = 0.50` and `postPhonemeLength = 0.50` at the uncompressed PCM WAV stage. Do not destructively slice, trim, or manipulate moras.
+* **Native Pre/Post Padding (Synthesis Headroom)**: Use `prePhonemeLength = 0.50` and `postPhonemeLength = 0.50` as standard synthesis padding headroom at the uncompressed PCM WAV stage. Do not destructively slice, trim, or manipulate moras. *(Important: Silence padding alone does not solve playback-start DAC/decoder clipping; see Phase 6 for the empirical playback solution)*.
 
 ---
 
 ## 4. Phase 6 — Optional Presentation Video Assembly
 
 ### Continuous Master Audio Architecture (Strategy B)
-Instead of encoding $N$ independent segmented clips, assemble **one continuous Master Audio WAV** track and render the entire video in a **single continuous FFmpeg pass**:
-1. **Master Track Assembly**: Chain slide audio tracks with configurable inter-slide silence (0.50s) and optional startup audio cue (`ピッ` + 150ms gap) to initialize the playback DAC once at $t=0$.
+Controlled experiments established that silence padding alone does not protect cold-start playback from initial-consonant clipping. The validated production architecture uses an active sacrificial startup signal (`ピッ` + 150ms gap) only once at playback onset, merges all slide narrations into **one continuous Master Audio WAV** track, and renders the entire video with a **single continuous AAC encode** in one FFmpeg pass:
+1. **Master Track Assembly**: Chain slide audio tracks with configurable inter-slide silence (0.50s) and a single startup audio cue (`ピッ` + 150ms gap) to initialize the playback DAC/decoder once at $t=0$. Inside this active master stream, subsequent slides require no individual dummy sounds and maintain clean consonant attacks.
 2. **CFR Still-Image Filter**: Always include `-vf fps=30,format=yuv420p` when using FFmpeg's concat demuxer on still PNG images to prevent black-screen rendering.
 3. **Repeat Final Image**: In image concat list files, repeat the last frame without duration so FFmpeg honors its full display time.
 4. **Hardware Acceleration**: Use NVIDIA NVENC (`h264_nvenc`) with clean fallback to CPU (`libx264`).
@@ -113,4 +113,4 @@ Instead of encoding $N$ independent segmented clips, assemble **one continuous M
 | `scripts/synthesize_presentation_audio.py` | Synthesizes Japanese presentation audio with query validation and test mode. |
 | `scripts/validate_audio.py` | Verifies presence, non-emptiness, and formatting of slide audio tracks. |
 | `scripts/build_presentation_video.py` | Renders synchronized Full HD 1080p MP4 videos with continuous master audio. |
-| `scripts/validate_video.py` | Audits video stream, dimensions, CFR, audio/video duration sync, and frame visibility. |
+| `scripts/validate_video.py` | Audits video stream, dimensions, CFR, audio/video duration match, and frame visibility. |

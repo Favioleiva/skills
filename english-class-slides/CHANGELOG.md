@@ -4,16 +4,39 @@ All notable changes to the `english-class-slides` skill will be documented in th
 
 ---
 
+## [1.3] — 2026-08-19
+
+### Added
+- **Explicit Six Core Deliverables Definition**:
+  - Formalized the complete skill output package as exactly **six deliverables**: 3 PowerPoint decks (`.pptx`) and 3 synchronized Full HD presentation videos (`.mp4`) across English, Spanish, and Japanese.
+- **Language-Differentiated Audio Narration Architecture**:
+  - **English (EN) & Spanish (ES)**: Dedicated human audio ingest workflow supporting DAW exports (e.g. REAPER) with 1:1 slide matching (`01.mp3` ... `53.mp3` or `slide_01.wav` ...).
+  - **Zero Destructive Audio Processing Policy**: Strictly prohibits automatic trimming, silence deletion, aggressive gating, or destructive filtering on human audio, ensuring initial consonants remain 100% intact.
+  - **Natural Lead-In Headroom**: Validated that natural 300–700 ms pre-speech silence in human recordings provides native DAC/decoder wake-up headroom, eliminating the need for artificial sacrificial tones in EN/ES.
+  - **Japanese (JA)**: Automated VOICEVOX GPU synthesis pipeline with continuous Kana reading layer (`slides_reading_ja_kana.txt`), per-slide synthesis, and single initial sacrificial startup cue (`ピッ` + 150 ms) to wake up DACs for TTS without initial silence.
+- **Universal Multi-Format Presentation Video Builder (`scripts/build_presentation_video.py`)**:
+  - Universal CLI parameter support (`--lang en`, `--lang es`, `--lang ja`).
+  - Flexible multi-format audio discovery (`01.mp3`, `01.wav`, `slide_01.mp3`, `slide_01.wav`, `Tracks/01.mp3`, etc.).
+  - Multi-channel stereo preservation across master PCM concatenation and final AAC encoding.
+  - Automatic hardware acceleration detection (`h264_nvenc` with CPU `libx264` fallback).
+  - Automated generation of `<topic>_<lang>_timeline.txt` and `<topic>_<lang>_chapters.txt`.
+  - Midpoint visual transitions ($t = \text{audio\_end} + 250\text{ ms}$) preventing narration overlap.
+  - Concluding slide persistence with FFmpeg concat demuxer last-frame repeat rule.
+- **Enhanced Quality Assurance Suite**:
+  - Upgraded `scripts/validate_audio.py` to inspect any naming pattern, decodability, duration, channels, sample rate, and non-destructive lead-in headroom.
+  - Upgraded `scripts/validate_video.py` to perform container stream audits, duration synchronization verification, and multi-timestamp visual frame extraction with MAD checks against source PNG renders.
+
+---
+
 ## [1.2] — 2026-08-17
 
 ### Added
-- **Full Multimedia Production Architecture**: Expanded skill from slide-deck generation into a complete, optional 6-phase pipeline supporting slides, audio synthesis, and synchronized Full HD 1080p presentation video assembly.
+- **Full Multimedia Production Architecture**: Expanded skill from slide-deck generation into a complete 6-phase pipeline supporting slides, audio synthesis, and synchronized Full HD 1080p presentation video assembly.
 - **Continuous Master Audio Architecture (Strategy B)**:
   - Replaced legacy per-slide segmented MP4 concatenation with a single continuous Master Audio WAV pipeline.
   - Eliminates DAC wake-up attenuation, audio driver sleep, decoder restarts, and consonant clipping across all slide transitions.
   - Reduces final video file size by over 50% through single-pass AAC encoding.
 - **Acoustic Playback Rationale Correction**:
-  - *Clarification on v1.1*: Earlier v1.1 guidance attributed first-consonant protection to 0.5 s native pre/post padding. Controlled playback experiments in v1.2 showed that silent padding alone is insufficient.
   - The validated video architecture uses a single sacrificial startup signal (`ピッ` + 150 ms gap) followed by one continuous master audio stream and a single final AAC encode.
 - **Continuous Japanese Kana Prosody & Zero-Whitespace Rule**:
   - Enforced continuous Japanese orthography in `slides_reading_ja_kana.txt` (eliminated artificial spaces that caused VOICEVOX phrase fragmentation).
@@ -23,24 +46,11 @@ All notable changes to the `english-class-slides` skill will be documented in th
   - Added Zero-Docker Google Colab workflow running official Linux GPU/CUDA binary builds directly on Tesla T4 accelerators.
   - Added query validation verifying submitted text against returned `query["kana"]` before synthesis.
   - Added `TEST_MODE` for rapid sample slide verification (`[1, 2, 10, 30]`).
-  - Added 3-stage raw (`.wav`), padded (`.wav`), and encoded (`.mp3`) diagnostic preservation.
-  - Standardized 0.5s pre/post silence buffer at the uncompressed PCM WAV stage as standard synthesis headroom.
 - **Configurable Visible Slide Numbering (Phase 4B)**:
   - Added native slide numbering across EN, ES, and JA presentations with background-aware contrast presets (`#1A2433` daytime, `#E1BC95` twilight, `#FFFFFF` night).
-  - Full configuration support in `deck_config.json` (`exclude_cover`, `exclude_vocabulary`, `start_number`, `position`, `font_size_pt`).
-- **Full HD 1080p Video Generator (`scripts/build_presentation_video.py`)**:
+- **Full HD 1080p Video Generator**:
   - Single-pass continuous rendering with hardware-accelerated NVIDIA NVENC (`h264_nvenc`) and high-quality `libx264` fallback.
-  - Fixed still-image black-screen issue by enforcing constant frame rate (CFR) filter: `-vf fps=30,format=yuv420p`.
-  - Added final-image repetition in concat lists to guarantee full display of the concluding slide.
-  - Automated PowerPoint COM 1080p slide frame exporter on Windows with absolute path resolution.
-  - Added 15-second diagnostic preview mode with frame extraction verification at 1s, 6s, and 11s before full batch rendering.
-  - Automated generation of `<topic>_<lang>_timeline.txt` and `<topic>_<lang>_chapters.txt` for YouTube and video player navigation.
-- **Audio & Video Quality Assurance Scripts**:
-  - Added `scripts/validate_audio.py` for audio count and integrity verification.
-  - Added `scripts/validate_video.py` for stream audit, dimensions, CFR, audio/video duration match, and visual frame inspection.
-- **Notebook Code-Cell Syntax Validation Safeguard**:
-  - Corrected spelling to `notebooks/[Python]_Voicevox_text_to_speech_from_Japanese_text_to_Japanese_Speech.ipynb`.
-  - Implemented generator safeguards for escaped newline strings (`\\n`) and AST `compile()` syntax validation across all notebook cells.
+  - Enforced constant frame rate (CFR) filter: `-vf fps=30,format=yuv420p`.
 
 ---
 
